@@ -59,3 +59,17 @@ Connect->Relationships Page
 
 Connect-> Chat page
     Instant message users internal or from external organization relationships.
+
+## View 
+
+Abode XD- Design View
+https://xd.adobe.com/view/094e030e-db13-4922-b71c-a49360d0489d-5c1d/
+
+## Controllers
+See page along top with component structure.
+
+## ENDPOINTS
+See section in XD file labeled endpoints
+
+## DATABASE SCHEMA
+See section in XD file labeled database schema
