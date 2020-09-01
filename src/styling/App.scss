@@ -1,0 +1,349 @@
+@import './mixins';
+@import './variables';
+
+// App
+.App {
+  height: 100%;
+  width: 100%; 
+  font-family: $roboto;
+  font-weight: $font-regular;
+  font-size: .9rem;
+  display: flex;
+  scroll-behavior: smooth;
+}
+
+.section {
+  width: 100%;
+  height: 100vh;
+  &-light {
+    width: 100%;
+    height: 100vh;
+    background-color: $background-color;
+  }
+  &-dark {
+    width: 100%;
+    height: 100vh;
+    background-color: $dark-shade;
+  }
+}
+
+.trans-overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .75);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@each $modifier , $breakpoint in $map-grid-props {
+  @if($modifier == '') {
+    $modifier: '-xs';
+  }
+  @include create-mq($breakpoint - 1, 'max') {
+    .hidden#{$modifier}-down {
+      display: none !important;
+    }
+  }
+  @include create-mq($breakpoint, 'min') {
+    .hidden#{$modifier}-up {
+      display: none !important;
+    }
+  }
+}
+
+.container {
+  max-width: $grid__bp-md * 1px;
+  margin: 0 auto;
+  &--fluid {
+    margin: 0;
+    max-width: 100%;
+  }
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    
+    &-end {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-end;
+    }
+    &-center {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  @each $modifier , $breakpoint in $map-grid-props {
+    @include create-col-classes($modifier, $grid__cols, $breakpoint);
+  }
+}
+
+.list {
+  list-style: none;
+}
+
+.form {
+  background-color: $light-shade;
+  border-radius: .5rem;
+  margin-top: 8rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+// Buttons
+.btn {
+  @include button($blue-primary, $blue-primary, .5rem 1.25rem .5rem 1.25rem, $roboto, .75rem, $light-shade, $orange-primary, transparent, $orange-primary, 400)
+}
+
+.lrg-btn {
+  @include button($orange-primary, $orange-primary, 1rem 1.5rem 1rem 1.5rem, $roboto, .75rem, $light-shade, $orange-primary, transparent, $orange-primary, 500)
+}
+
+.btn-white {
+  @include button(transparent, $light-shade, .5rem 1.25rem .5rem 1.25rem, $roboto, .75rem, $light-shade, $orange-primary, transparent, $orange-primary, 400)
+}
+
+.lrg-btn-white {
+  @include button(transparent, $light-shade, 1rem 1.5rem 1rem 1.5rem, $roboto, .75rem, $light-shade, $orange-primary, transparent, $orange-primary, 500)
+}
+
+// INPUT
+.input {
+  padding: 1rem;
+  border: solid 1px $background-color;
+  border-radius: 3px;
+  margin-top: 1rem;
+}
+
+.link {
+  text-align: center;
+  text-decoration: none;
+  color: $blue-primary;
+}
+
+// FIll
+.fill-light {
+  fill: $light-shade;
+}
+
+.fill-dark {
+  fill: $dark-shade;
+}
+
+.fill-primary {
+  fill: $blue-primary;
+}
+
+// SIZE
+.size-1 {
+  height: 1rem;
+}
+
+.size-2 {
+  height: 2rem;
+}
+
+.size-3 {
+  height: 3rem;
+}
+
+.size-4 {
+  height: 4rem;
+}
+
+.size-5 {
+  height: 5rem;
+}
+
+.size-6 {
+  height: 6rem;
+}
+
+// Margin
+.mg-t-65 {
+  margin-top: .65rem;
+  margin-left: .25rem;
+}
+.mg-t-1 {
+  margin-top: 1rem;
+}
+
+.mg-t-2 {
+  margin-top: 2rem;
+}
+
+.mg-b-1 {
+  margin-bottom: 1rem;
+}
+
+.mg-tb-1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mg-tb-2 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.mg-lr-auto {
+  margin: 0 auto;
+}
+
+// Padding
+.pd-1 {
+  padding: 1rem;
+}
+
+.pd-2 {
+  padding: 2rem;
+}
+
+// Navbars
+.Navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  &:scroll {
+    border: solid .13rem $orange-primary;
+    background-color: $orange-primary;
+    cursor: pointer;
+        color: $light-shade;
+    @include transition (all .6s);
+  }
+}
+
+.nav-link {
+  color: $light-shade;
+  display: flex;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin: 0 auto;
+  text-align: center center;
+  &:hover {
+    border-bottom: solid .12rem $light-shade;
+    cursor: pointer;
+        color: $light-shade;
+    @include transition (all .3s);
+  }
+  &:focus {
+    border-bottom: solid .12rem $orange-primary;
+    cursor: pointer;
+        color: $light-shade;
+    @include transition (all .3s);
+  }
+}
+
+.logo {
+  height: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+.logo-icon {
+  height: 3rem;
+}
+
+// Banners
+.section-banner {
+  width: 100%;
+  height: 80vh;
+}
+
+.banner-ribbon {
+  width: 100%;
+  height: 20vh;
+  background-color: black;
+  display: flex;
+}
+
+.headline {
+  text-align: center;
+  color: $light-shade;
+  margin-bottom: .5rem;
+  font-weight: $font-black;
+  font-size: 4rem;
+}
+
+.phrase {
+  text-align: center;
+  color: $light-shade;
+  margin-bottom: .5rem;
+  font-weight: $font-black;
+  font-size: 1rem;
+}
+
+.banner-btn {
+  margin-top: 2rem;
+}
+
+.home-banner {
+    @include bg-img('../assets/bannerImages/homeBanner.jpeg', #000000, none, no-repeat, cover, none);
+}  
+
+// Footer
+.Footer {
+  background-color: $dark-shade;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+// Nested full page containers
+.Website, .Login, .Signup, .ResetPassword {
+  width: 100vw;
+}
+
+
+// Login Background
+
+// .2d-motion {
+//   height: 100%;
+//   /* max-height: 600px; */
+//   width: 1000px;
+//   background-color: hsla(200,40%,30%,.4);
+//   background-image:       
+//       url('https://78.media.tumblr.com/cae86e76225a25b17332dfc9cf8b1121/tumblr_p7n8kqHMuD1uy4lhuo1_540.png'), 
+//       url('https://78.media.tumblr.com/66445d34fe560351d474af69ef3f2fb0/tumblr_p7n908E1Jb1uy4lhuo1_1280.png'),
+//       url('https://78.media.tumblr.com/8cd0a12b7d9d5ba2c7d26f42c25de99f/tumblr_p7n8kqHMuD1uy4lhuo2_1280.png'),
+//       url('https://78.media.tumblr.com/5ecb41b654f4e8878f59445b948ede50/tumblr_p7n8on19cV1uy4lhuo1_1280.png'),
+//       url('https://78.media.tumblr.com/28bd9a2522fbf8981d680317ccbf4282/tumblr_p7n8kqHMuD1uy4lhuo3_1280.png');
+//   background-repeat: repeat-x;
+//   background-position: 
+//       0 20%,
+//       0 100%,
+//       0 50%,
+//       0 100%,
+//       0 0;
+//   background-size: 
+//       2500px,
+//       800px,
+//       500px 200px,
+//       1000px,
+//       400px 260px;
+//   animation: 50s para infinite linear;
+//   }
+
+// @keyframes para {
+//   100% {
+//       background-position: 
+//           -5000px 20%,
+//           -800px 95%,
+//           500px 50%,
+//           1000px 100%,
+//           400px 0;
+//       }
+//   }
+
+ 

@@ -1,0 +1,50 @@
+// IMPORTS
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+// DIMENSIONS
+$height: 100vh;
+$card-padding: 15px;
+
+// FONTS
+$bebas-neue: 'Bebas Neue', cursive;
+$roboto: 'Roboto', sans-serif;
+// FONT WEIGHT
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-bold: 700;
+$font-black: 900;
+
+// COLORS
+$background-color: #e4e4e4;
+$blue-primary: #1561ad;
+$blue-secondary: #1c77ac;
+
+$orange-primary: #eb5424;
+$orange-secondary: #ca5237;
+
+$dark-shade: #33363B;
+$medium-shade: #7b7b7b;
+$light-shade: #eeeeee;
+
+$success-color: #7ebc59;
+$pending-color: #ead251;
+$error-color: #b94040;
+
+// IMAGES
+$home-banner: url('../assets/bannerImages/homeBanner.jpeg');
+
+// GRID
+$grid__bp-sm: 576;
+$grid__bp-md: 768;
+$grid__bp-lg: 992;
+$grid__bp-xl: 1200;
+$grid__cols: 12;
+
+$map-grid-props: (
+        '': 0,
+        '-sm': $grid__bp-sm,
+        '-md': $grid__bp-md,
+        '-lg': $grid__bp-lg,
+        '-xl': $grid__bp-xl
+);

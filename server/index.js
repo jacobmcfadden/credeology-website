@@ -5,6 +5,8 @@ const session = require('express-session');
 const app = express();
 
 const {CONNECTION_STRING, SESSION_SECRET, SERVER_PORT}=process.env;
+
+const awsCtrl = require('./controllers/awsController');
 const auth = require('./controllers/authController');
 
 app.use(express.json());
@@ -26,9 +28,10 @@ massive({
 }).catch(err => console.log(err));
 
 // Put endpoints here
+app.post('/aws/signS3', awsCtrl.sign_s3);
 app.post('/auth/login', auth.login);
 app.post('/auth/register', auth.register);
-app.get('/auth/logout', auth.logout);
+app.post('/auth/logout', auth.logout);
 app.get('/auth/user', auth.getUser);
 
 app.listen(SERVER_PORT, () => console.log(`Connected to port ${SERVER_PORT}`));

@@ -1,18 +1,12 @@
 import React from 'react';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Banner from './components/Banner';
-import ReturnSection from './components/ReturnSection';
+import routes from './routing/appRoutes'
 
-import './App.css';
+import './styling/App.scss';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <Header/>
-      <Banner/>
-      <ReturnSection/>
-      <Footer/>
+      {routes}
     </div>
   );
 }
