@@ -7,14 +7,6 @@ import Credeology from '../../../assets/logo/Credeology';
 const ResetPasswordForm = (props) => {
   return (
     <div className="ResetPasswordForm form pd-2">
-            <div className="message-display">
-
-            </div>
-            <div className="container__col-12 mg-tb-2">
-                <Logo SVGClass="size-6" fill="fill-primary"/>  
-                <Credeology margin="mg-t-1" size="size-3" fill="fill-dark"/>
-            </div>
-            {/* Could be a HOC below this point */}
             <span className="container__row-center">
                 <p className="container__col-12 title">Password Reset</p>
             </span>

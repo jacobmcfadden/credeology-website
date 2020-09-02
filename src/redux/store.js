@@ -1,5 +1,11 @@
-import reducer from './reducers/authReducer';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
+import authReducer from './reducers/authReducer';
+import orgReducer from './reducers/orgReducer';
 
-export default createStore(reducer, applyMiddleware(promiseMiddleware));
+const rootReducer = combineReducers({
+    auth: authReducer,
+    org: orgReducer
+});
+
+export default createStore(rootReducer, applyMiddleware(promiseMiddleware));

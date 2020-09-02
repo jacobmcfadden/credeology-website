@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+// applyMIddleware, compose, createStore
+// thunkmiddleware
 
 import './reset.css';
 import './index.css';
-
 import App from './App';
+// CURRENTREDUCER
 import * as serviceWorker from './serviceWorker';
-import {HashRouter as Router } from 'react-router-dom';
+
+import {BrowserRouter as Router } from 'react-router-dom';
 import store from './redux/store';
-import {Provider} from 'react-redux';
+
 
 ReactDOM.render(
 

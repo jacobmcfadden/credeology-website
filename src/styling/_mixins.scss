@@ -57,7 +57,7 @@
 @mixin create-col-classes($modifier, $grid-cols, $breakpoint) {
   @include create-mq($breakpoint, 'min') {
     &__col#{$modifier}-offset-0 {
-      margin-left: 0;
+      margin-left: 8;
     }
     @for $i from 1 through $grid-cols {
       &__col#{$modifier}-#{$i} {

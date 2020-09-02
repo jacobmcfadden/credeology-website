@@ -1,9 +1,9 @@
 import React from 'react';
-import AuthForm from '../../widgets/forms/AuthForm';
+import AuthForm from './AuthForm';
 
-const Login = (props) => {
+const Auth = (props) => {
   return (
-    <div className="Login">
+    <div className="Auth">
       <div className="section-dark">
         <div className="container">
           <div className="container__row-center">
@@ -22,4 +22,4 @@ const Login = (props) => {
   );
 }
 
-export default Login;
+export default Auth;

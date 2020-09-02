@@ -1,9 +1,11 @@
 import React from 'react';
-import routes from './routing/appRoutes'
+
 
 import './styling/App.scss';
+import routes from './routing/routes';
 
-const App = () => {
+const App = (props) => {
+
   return (
     <div className="App">
       {routes}

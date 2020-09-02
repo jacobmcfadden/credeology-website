@@ -4,16 +4,11 @@ import {Switch, Route} from 'react-router-dom';
 import UserAccount from './pages/UserAccount';
 import Connect from './pages/Connect';
 import Portal from './pages/Portal';
-import AppNav from './AppNav';
-import AppSubNav from './AppSubNav';
 
 
-const AppProtected = (props) => {
+const Display = (props) => {
   return (
-    <div className="AppProtected">
-      <p>This is the AppProtected Component</p>
-      <AppNav/>
-      <AppSubNav/>
+    <div className="Display">
       <Switch>
         <Route path="/app/account" component={UserAccount}/>
         <Route path="/app/connect" component={Connect}/>
@@ -23,4 +18,4 @@ const AppProtected = (props) => {
   );
 }
 
-export default AppProtected;
+export default Display;

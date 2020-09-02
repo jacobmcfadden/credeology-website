@@ -2,7 +2,10 @@ import axios from 'axios';
 
 const initialState = {
     user: {},
-    isLoggedIn: false
+    isAuthenticated: false,
+    isEmailVerified: false,
+    isPhoneVerified: false,
+    isPhoneVerifySkip: false
 }
 
 const LOGIN_USER = 'LOGIN_USER';

@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React from 'react';
 
 import Navbar from './header/Navbar';
 import Banner from './header/Banner';

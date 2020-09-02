@@ -25,8 +25,8 @@ const Navbar = (props) => {
             </nav>
             <div className="container__col-2">
             <div className="container__row">
-              <div className="container__col-6"><Link to="/login"><button className="btn">Login</button></Link></div>
-              <div className="container__col-6"><Link to="/signup"><button className="btn-white">Signup</button></Link></div>
+              <div className="container__col-6"><Link to="/auth/login"><button className="btn">Login</button></Link></div>
+              <div className="container__col-6"><Link to="/auth/signup"><button className="btn-white">Signup</button></Link></div>
             </div>
             </div>
         </div>

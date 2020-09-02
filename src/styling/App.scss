@@ -207,6 +207,10 @@
 .pd-2 {
   padding: 2rem;
 }
+.pd-tb-1 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 
 // Navbars
 .Navbar {
@@ -224,9 +228,53 @@
   }
 }
 
+.AppNav {
+  width: 100%;
+
+  background-color: $dark-shade;
+}
+
+.AppSubNav {
+  width: 100%;
+
+  background-color: $blue-primary;
+}
+
+.Display {
+  width: 100%;
+  height: calc(100vh - 110px);
+  overflow: scroll;
+}
+
+.Portal {
+  height: 300vh;
+}
+
+.icon-light {
+  color: $light-shade;
+  width: 5rem;
+  margin: 0 auto;
+}
+
+.circle {
+  background-color: $blue-primary;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 auto;
+}
+
+.circle-initials {
+  color: $light-shade;
+  margin: auto;
+}
+
+.breadcrumb {
+  color: $light-shade;
+  text-transform: uppercase;
+}
 .nav-link {
   color: $light-shade;
-  display: flex;
   text-decoration: none;
   text-transform: uppercase;
   margin: 0 auto;
@@ -239,8 +287,7 @@
   }
   &:focus {
     border-bottom: solid .12rem $orange-primary;
-    cursor: pointer;
-        color: $light-shade;
+    outline: none;
     @include transition (all .3s);
   }
 }
@@ -301,10 +348,13 @@
 }
 
 // Nested full page containers
-.Website, .Login, .Signup, .ResetPassword {
-  width: 100vw;
+.Website, .Auth, .Signup, .ResetPassword, .AppProtected {
+  width: 100%;
 }
 
+.AppProtected {
+  overflow: hidden;
+}
 
 // Login Background
 

@@ -5,6 +5,7 @@ module.exports = {
         const db = req.app.get('db');
         const {email, phone, password} = req.body;
         const user = await db.auth.check_user(email, phone);
+    
         if(!user[0]) {
             return res.status(401).send('Incorrect credentials');
         } else {
@@ -15,10 +16,10 @@ module.exports = {
                     email: user[0].email,
                     firstName: user[0].first_name,
                     lastName: user[0].last_name,
-                    phone: newUser.phone,
-                    verifyPhone: newUser.verify_phone,
-                    verifyEmail: newUser.verify_email,
-                    isAdmin: newUser.is_admin
+                    phone: user[0].phone,
+                    verifyPhone: user[0].verify_phone,
+                    verifyEmail: user[0].verify_email,
+                    isAdmin: user[0].is_admin
                 }
                 res.status(200).send(req.session.user)
             } else {
@@ -65,7 +66,7 @@ module.exports = {
         if(req.session.user){
             res.status(200).send(req.session.user)
         } else {
-            res.sendStatus(404)
+            res.status(404).send("There is not Session Here")
         }
     }
 }
