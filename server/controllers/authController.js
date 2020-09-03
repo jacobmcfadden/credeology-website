@@ -1,10 +1,7 @@
 const bcrypt = require('bcrypt');
 const Nexmo = require('nexmo');
 
-const nexmo = new Nexmo({
-    apiKey: '41f12fe3',
-    apiSecret: 'x2vBMKnkWuuS5QkM'
-});
+
 
 module.exports = {
     login: async (req, res) => {
