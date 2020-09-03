@@ -93,10 +93,13 @@
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: .9rem;
+  font-weight: 400;
+}
+
+.uppercase-title {
+  font-size: .8rem;
   font-weight: 500;
-  text-align: center;
-  margin-bottom: 1rem;
 }
 
 // Buttons
@@ -117,12 +120,62 @@
 }
 
 // INPUT
-.input {
-  padding: 1rem;
-  border: solid 1px $background-color;
-  border-radius: 3px;
-  margin-top: 1rem;
-}
+  .input {
+    padding: 1rem;
+    border: solid 1px $background-color;
+    border-radius: 3px;
+    margin-top: 12px;
+    background: none;
+    outline: 0;
+    &.valid {
+      border-color: $success-color;
+    }
+    &.valid + .label {
+      background: none;
+      color: $success-color;
+      font-size: 70%;
+      padding: 1px 6px;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+    &.invalid {
+      border-color: $error-color;
+    }
+    &.invalid + .label {
+      background: none;
+      color: $error-color;
+      font-size: 70%;
+      padding: 1px 6px;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+    &:focus {
+      border-color: $blue-primary;
+    }
+    &:focus + .label {
+      background: none;
+      color: $blue-primary;
+      font-size: 70%;
+      padding: 1px 6px;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+  }
+  
+
+  .label {
+    transition: // not padding
+      background 0.2s,
+      color 0.2s,
+      top 0.2s,
+      bottom 0.2s,
+      right 0.2s,
+      left 0.2s;
+      font-size: 70%;
+    position: absolute;
+    color: $light-shade;
+    padding: 7px 6px;
+  }
 
 .link {
   text-align: center;
@@ -303,6 +356,17 @@
   height: 3rem;
 }
 
+.rotate {
+  animation: spin-animation 4s infinite;
+}
+@keyframes spin-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
 // Banners
 .section-banner {
   width: 100%;
@@ -356,6 +420,9 @@
   overflow: hidden;
 }
 
+.message-display {
+  height: 1rem;
+}
 // Login Background
 
 // .2d-motion {

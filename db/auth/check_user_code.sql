@@ -1,0 +1,1 @@
+SELECT * FROM info_verifications WHERE user_id = $1 AND info = $2;

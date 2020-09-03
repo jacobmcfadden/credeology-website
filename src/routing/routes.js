@@ -14,8 +14,8 @@ export default (
       {/* PUBLIC WEBSITE */}
         <Route exact path="/" component={Website}/>
         {/* AUTH ROUTES */}
-		<AuthRoute path="/auth" component={Auth}/>   
+		<Route path="/auth" component={Auth}/>   
         {/* PROTECTED APP ROUTES */}
-        <AuthRoute path="/app" component={AppProtected}/>
+        <AuthRoute path="/app/*" component={AppProtected}/>
     </Switch>
 );

@@ -5,15 +5,13 @@ import MenuIcon from '../../../../assets/icons/MenuIcon';
 const AppNav = (props, {match}) => {
   let location = useLocation();
 
+  useEffect(() => {
+    setFocus()
+  });
+
   const setFocus = () => {
       document.getElementById(location.pathname).focus();
     };
-
-  useEffect(() => {
-    setFocus()
-  })
-
-  
 
   return (
     <div className="AppNav pd-tb-1">
