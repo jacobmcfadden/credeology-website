@@ -1,23 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {getUser} from './redux/reducers/authReducer';
-
-import './styling/App.scss';
 import routes from './routing/routes';
 
-const App = (props) => {
-  useEffect(() => {
-    props.getUser()
-    return function cleanup() {
-      props.getUser()
-    }
-});
+import './styling/App.scss';
 
+const App = (props) => {
+  
   return (
-    <div className="App">
+    <div className="App container--fluid section-dark">
       {routes}
     </div>
   );
 }
 
-export default connect(null, {getUser})(App);
+export default connect(null)(App);

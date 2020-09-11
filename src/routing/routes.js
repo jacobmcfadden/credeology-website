@@ -1,21 +1,20 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
-
-// Path Components
-import Website from '../components/routing/website/Website';
-import Auth from '../components/routing/auth/Auth';
-import AppProtected from '../components/routing/app/AppProtected';
-
-// Special Routes
 import AuthRoute from './AuthRoute';
+import AppRoute from './AppRoute';
+import VerifyRoute from './VerifyRoute';
+
+// Components
+import Website from './components/website/Website';
+import Verify from './components/verify/Verify';
+import Auth from './components/auth/Auth';
+import AppProtected from './components/app/AppProtected';
 
 export default (
     <Switch>
-      {/* PUBLIC WEBSITE */}
         <Route exact path="/" component={Website}/>
-        {/* AUTH ROUTES */}
-		<Route path="/auth" component={Auth}/>   
-        {/* PROTECTED APP ROUTES */}
-        <AuthRoute path="/app/*" component={AppProtected}/>
+        <VerifyRoute exact path="/verify" component={Verify}/>
+		<AuthRoute path="/auth" component={Auth}/>       
+        <AppRoute path="/app" component={AppProtected}/>
     </Switch>
 );

@@ -1,9 +1,8 @@
 import React from 'react';
 
 const Logo = (props) => {
-	const fill = props.fill;
+	const pathClass = props.pathClass;
 	const SVGClass = props.SVGClass;
-	const rotate = props.rotate;
   return (
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	  viewBox="0 0 243.15 267.6"
@@ -11,7 +10,7 @@ const Logo = (props) => {
 
 <defs>
 </defs>
-<path className={fill + " " + rotate} d="M100.31,18.12c0.13,0,0.26,0,0.39,0c0,2.84,0.02,5.69,0,8.53c-0.03,3.54-1.13,6.63-4.13,8.73
+<path className={pathClass} d="M100.31,18.12c0.13,0,0.26,0,0.39,0c0,2.84,0.02,5.69,0,8.53c-0.03,3.54-1.13,6.63-4.13,8.73
 	c-1.59,1.11-3.32,2.04-5.05,2.93c-3.52,1.81-6.79,1.28-9.66-1.37c-2.33-2.15-4.54-4.43-6.79-6.66c-2.68-2.66-5.26-5.42-8.05-7.96
 	c-2.37-2.16-4.52-2.37-7.11-0.54c-4.86,3.44-9.64,7.02-14.31,10.72c-2.64,2.09-2.93,4.45-1.43,7.48c0.68,1.38,1.41,2.73,2.16,4.07
 	c2.16,3.86,4.39,7.68,6.48,11.58c1.13,2.11,2.03,4.41,1.21,6.83c-1.47,4.38-4.29,7.82-8.13,10.35c-2.57,1.69-5.37,1.13-8.1,0.3

@@ -1,5 +1,6 @@
 // IMPORTS
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900|Montserrat:400,700');
 
 // DIMENSIONS
 $height: 100vh;
@@ -8,6 +9,7 @@ $card-padding: 15px;
 // FONTS
 $bebas-neue: 'Bebas Neue', cursive;
 $roboto: 'Roboto', sans-serif;
+$lato: 'Lato';
 // FONT WEIGHT
 $font-light: 300;
 $font-regular: 400;
@@ -16,6 +18,7 @@ $font-bold: 700;
 $font-black: 900;
 
 // COLORS
+$input-color: #e6e6e6;
 $background-color: #e4e4e4;
 $blue-primary: #1561ad;
 $blue-secondary: #1c77ac;
@@ -26,9 +29,10 @@ $orange-secondary: #ca5237;
 $dark-shade: #33363B;
 $medium-shade: #7b7b7b;
 $light-shade: #eeeeee;
+$effect-color: rgba(255,255,255,0.30);
 
 $success-color: #7ebc59;
-$pending-color: #ead251;
+$warning-color: #ead251;
 $error-color: #b94040;
 
 // IMAGES
