@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loginUser} from '../../redux/reducers/authReducer';
+import {addWarning, addError, addSuccess} from '../../redux/reducers/notificationReducer';
 import * as RegexService from '../../services/RegexService';
 
 import FormButton from '../../components/buttons/FormButton';
 import FormInput from '../../components/inputs/FormInput';
+import FormLink from '../../components/links/FormLink';
 
 const LoginForm = (props) => {
     const [email, setEmail] = useState('');
@@ -49,8 +50,21 @@ const LoginForm = (props) => {
         }
     };
 
-    const login = async () => {
-        const loggedIn = await props.loginUser(email, phone, password);
+    const login = (event) => {
+        if(password && (email || phone)){
+            if(event === 'login' && !emailInvalid && !passwordInvalid && !phoneInvalid) {
+                props.loginUser(email, phone, password).then((res) => {
+                    props.addSuccess('Login was successful!')
+                }).catch((err) => {
+                    props.addError('You have entered invalid login credentials.')
+                })   
+            } else { 
+                props.addWarning('Please correct input errors listed below each input field.')
+            }
+        } else {
+            props.addWarning('Email or phone, and password cannot be left blank.')
+        }
+
     };
 
     return (
@@ -131,7 +145,7 @@ const LoginForm = (props) => {
             <div className="container__row m-v-1">
                 <div className="container__col-12 link">
                     <FormButton
-                        name="email" 
+                        name="login" 
                         goalMet={props.isAuthenticated}
                         isLoading={props.isLoading}
                         displayText={'Login'}
@@ -142,29 +156,25 @@ const LoginForm = (props) => {
             </div>
             {/* RECOVERY LINK */}
             <div className="container__row">
-                    <Link to="/auth/recovery" className="link container__col-12">
-                        <FormButton 
-                            name="recovery" 
-                            disable={true}
-                            goalMet={false}
-                            displayText={'Forget your password?'}
-                            styling={'btn-lnk-md-blue'}
-                            handleClick={() => {}}
-                        />
-                    </Link>
+                <div className="container__col-12">
+                    <FormLink
+                    name={'recovery'}
+                    where={'/auth/recovery'}
+                    displayText={'Forget you password?'} 
+                    styling={'Formlink-md-blue'}
+                    />
+                </div>
             </div>
             {/* SIGN LINK */}
             <div className="container__row">
-                    <Link to="/auth/signup" className="link container__col-12">
-                        <FormButton
-                            name="signup" 
-                            disable={true}
-                            goalMet={false}
-                            displayText={'Dont have an account?'}
-                            styling={'btn-lnk-md-blue'}
-                            handleClick={() => {}}
-                        />
-                    </Link>
+                <div className="container__col-12">
+                    <FormLink
+                    name={'signup'}
+                    where={'/auth/signup'}
+                    displayText={'Dont have an account?'} 
+                    styling={'Formlink-md-blue'}
+                    />
+                </div>
             </div>
         </div>
     );
@@ -175,4 +185,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated
   });
 
-export default connect(mapStateToProps, {loginUser})(LoginForm);
+export default connect(mapStateToProps, {loginUser, addError, addSuccess, addWarning})(LoginForm);

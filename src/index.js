@@ -4,8 +4,8 @@ import {Provider} from 'react-redux';
 // applyMIddleware, compose, createStore
 // thunkmiddleware
 
-import './reset.css';
-import './index.css';
+import './reset.scss';
+import './index.scss';
 import App from './App';
 // CURRENTREDUCER
 import * as serviceWorker from './serviceWorker';

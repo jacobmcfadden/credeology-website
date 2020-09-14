@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-export function registerUser(firstName, lastName, phone, email, password) {
-	return axios.post('/auth/register', {firstName, lastName, phone, email, password})
+// AUTH CALLS
+export async function registerUser(firstName, lastName, phone, email, password) {
+    return axios.post('/auth/register', {firstName, lastName, phone, email, password})
 }
 
 export function loginUser(email, phone, password){
@@ -16,18 +17,27 @@ export function getUser(){
     return axios.get('/auth/user')
 }
 
-export function sendEmailCode(userId, email){
-    return axios.post('/verify/email', {userId, email})
+// VERIFICATION CALLS
+export function getVer(){
+    return axios.get('/verify')
 }
 
-export function sendPhoneCode(userId, phone){
-    return axios.post('/verify/phone', {userId, phone})
+export function sendEmailCode(){
+    return axios.post('/verify/email')
 }
 
-export function verifyEmail(userId, email, userInput){
-    return axios.put('/verify/email', {userId, email, userInput})
+export function sendPhoneCode(){
+    return axios.post('/verify/phone')
 }
 
-export function verifyPhone(userId, phone, userInput){
-    return axios.put('/verify/phone', {userId, phone, userInput})
+export function verifyEmail(userInput){
+    return axios.put('/verify/email', {userInput})
+}
+
+export function verifyPhone(userInput){
+    return axios.put('/verify/phone', {userInput})
+}
+
+export function updateTwoFactorAuth(twoFactorAuth){
+    return axios.put('/verify/tfa', {twoFactorAuth})
 }

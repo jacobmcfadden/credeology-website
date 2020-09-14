@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {registerUser} from '../../redux/reducers/authReducer';
 import * as RegexService from '../../services/RegexService';
-import {addWarning} from '../../redux/reducers/notificationReducer';
+import {addSuccess, addWarning, addError} from '../../redux/reducers/notificationReducer';
 
 import FormButton from '../../components/buttons/FormButton';
 import FormInput from '../../components/inputs/FormInput';
+import FormLink from '../../components/links/FormLink';
 
 const SignupForm = (props) => {
     const [password, setPassword] = useState('');
@@ -94,17 +94,19 @@ const SignupForm = (props) => {
         
     }
 
-    const register = async () => {
+    const register = () => {
         if(password === passwordConfirm && (password !== '' || passwordConfirm !== '')) {
             if(firstName && lastName && phone && email && password) {
                 if(!firstNameInvalid && !lastNameInvalid && !phoneInvalid && !emailInvalid && !passwordInvalid) {
-                    await props.registerUser(firstName, lastName, phone, email, password);
-                } else {await props.addWarning('Please fix input errors listed below.')}
-            } else {await props.addWarning('All form input must be filled out correctly.')}
+                   props.registerUser(firstName, lastName, phone, email, password).then((res) => {
+                       props.addSuccess("Registration was successsful!");
+                   }).catch((error) => {props.addError("Something went wrong with account creation.")})
+                } else {props.addWarning('Input errors listed below each input feild must be resolved.')}
+            } else {props.addWarning('No input fields can be left blank.')}
         } else {
         setPasswordInvalid(true);
         setPasswordConfirmInvalid(true);
-        await props.addWarning({message: 'Password and Confirm Password must be filled out correctly.', type: 'ErrorMsg'});
+        props.addWarning('Password and Confirm Password must be filled out correctly.');
         }
     };
 
@@ -200,7 +202,7 @@ const SignupForm = (props) => {
                 />
             </div>
             {/* CONFIRM PASSWORD INPUT */}
-            <div className="container__row m-t-1">
+            <div className="container__row">
                 <FormInput
                     styling={'input'}
                     hide={false}
@@ -229,18 +231,16 @@ const SignupForm = (props) => {
                     />
                 </div>
             </div>
-            {/* LOGIN PAGE LINK */}
+            {/* LOGIN LINK */}
             <div className="container__row">
-                <Link to="/auth" className="link container__col-12">
-                    <FormButton 
-                        name="login" 
-                        disable={true}
-                        goalMet={false}
-                        displayText={'Opps, back to login!'}
-                        styling={'btn-lnk-md-blue'}
-                        handleClick={() => {}}
+                <div className="container__col-12">
+                    <FormLink
+                    name={'login'}
+                    where={'/auth'}
+                    displayText={'Opps, back to login!'} 
+                    styling={'Formlink-md-blue'}
                     />
-                </Link>
+                </div>
             </div>
         </div>
     );
@@ -251,4 +251,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated
   });
 
-export default connect(mapStateToProps, {registerUser, addWarning})(SignupForm);
+export default connect(mapStateToProps, {registerUser, addWarning, addSuccess, addError})(SignupForm);

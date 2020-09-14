@@ -1,13 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import routes from './routing/routes';
+import NofiyBanner from './containers/lists/messages/NotifiyBanner';
 
-import './styling/App.scss';
+import './App.scss';
 
 const App = (props) => {
   
   return (
-    <div className="App container--fluid section-dark">
+    <div className="App">
+      <NofiyBanner/>
       {routes}
     </div>
   );

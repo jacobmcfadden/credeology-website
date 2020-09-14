@@ -35,7 +35,7 @@ function useKeyPress(targetKey) {
 
 const SixDigitButton = (props) => {
 
-    const {show} = props;
+    const {show, goalMet, handleCode} = props;
     
     const [code, setCode] = useState('');
     const [first, setFirst] = useState('');
@@ -52,7 +52,7 @@ const SixDigitButton = (props) => {
     const input5 = useRef(null);
     const input6 = useRef(null);
     const bSpace = useKeyPress('Backspace')
-
+    
     useEffect(() => {
       if(show) {
         if(!first && !second && !third && !fourth && !fifth && !sixth) {
@@ -68,31 +68,27 @@ const SixDigitButton = (props) => {
         } else if(first && second && third && fourth && fifth && !sixth) {
           input6.current.focus()
         } else if(first && second && third && fourth && fifth && sixth) {
-          sendCode();
-        } else {
-
-        }
+          setCode(`${first}${second}${third}${fourth}${fifth}${sixth}`)
+        }      
       } else {
-
       }
-      
-    }, [show, first, second, third, fourth, fifth, sixth, sendCode]);
+    }, [show, first, second, third, fourth, fifth, sixth, code]);
 
-    const handleKeyPress = (event) => {
+    useEffect(() => {
+      if(code && show && !goalMet) {
+        handleCode(code)
+      }
+    }, [code, show, goalMet, handleCode]);
+
+  const handleKeyPress = (event) => {
         if (bSpace) {
           console.log(bSpace)
             event.target.previous.focus();
         }
     }
 
-    const sendCode = () => {
-      console.log('trying to make code');
-        setCode(`${first}${second}${third}${fourth}${fifth}${sixth}`);
-        props.handleCode(code);
-    }
-
   return (
-    <div className={`SixDigitButton m-v-1 ${show ? "" : "hidden"}`}>
+    <div className={`SixDigitButton m-v-1 ${show && !goalMet ? "" : "hidden"}`}>
         <div className="mm-number">
 			<div className="mm-number-container">
 				<div className="mm-number-input">

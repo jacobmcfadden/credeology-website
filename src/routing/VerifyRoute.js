@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
-import {getUser} from '../redux/reducers/authReducer';
+import {getVer} from '../redux/reducers/verifyReducer';
+import {addSystem} from '../redux/reducers/notificationReducer';
 
 const VerifyRoute = (props) => {
-    const {getUser, 
+    const {getVer,
+        addSystem, 
         isAuthenticated, 
+        verId,
         isEmailVerified, 
         isPhoneVerified, 
         isPhoneVerifySkip, 
@@ -13,15 +16,18 @@ const VerifyRoute = (props) => {
         ...rest} = props;
        
     useEffect(() => {
-        getUser()
+            getVer().then((res)=>{
+            }).catch((err)=>{
+                addSystem('Please verify you credentials.')
+            })
         return function cleanup() {
-            getUser()
+            getVer()
         } 
-    }, [getUser]);
-
+    }, [getVer, isAuthenticated, isEmailVerified, isPhoneVerified, addSystem]);
+    
     if(isAuthenticated) {
         if(isEmailVerified && (isPhoneVerified || isPhoneVerifySkip)) {
-            return (<Redirect push to={'/app/portal'} />);
+            return (<Redirect push to={'/app'} />);
         } else {
             return (<Route {...rest} render={(props) => (<Component {...props} />)}/>);
         }
@@ -32,9 +38,10 @@ const VerifyRoute = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isEmailVerified: state.auth.user.isEmailVerified,
-  isPhoneVerified: state.auth.user.isPhoneVerified,
-  isPhoneVerifySkip: state.auth.isPhoneVerifySkip
+  verId: state.ver.id,
+  isEmailVerified: state.ver.isEmailVerified,
+  isPhoneVerified: state.ver.isPhoneVerified,
+  isPhoneVerifySkip: state.ver.isPhoneVerifySkip
 });
 
-export default connect(mapStateToProps, {getUser})(VerifyRoute);
+export default connect(mapStateToProps, {getVer, addSystem})(VerifyRoute);

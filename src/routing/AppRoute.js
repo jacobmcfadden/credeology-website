@@ -24,9 +24,9 @@ const AppRoute = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isEmailVerified: state.auth.user.isEmailVerified,
-  isPhoneVerified: state.auth.user.isPhoneVerified,
-  isPhoneVerifySkip: state.auth.isPhoneVerifySkip
+  isEmailVerified: state.ver.isEmailVerified,
+  isPhoneVerified: state.ver.isPhoneVerified,
+  isPhoneVerifySkip: state.ver.isPhoneVerifySkip
 });
 
 export default connect(mapStateToProps)(AppRoute);

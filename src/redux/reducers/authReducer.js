@@ -7,7 +7,6 @@ const initialState = {
     isLoading: false
 }
 
-
 export function registerUser(firstName, lastName, phone, email, password) {
 
     return {
@@ -19,7 +18,7 @@ export function registerUser(firstName, lastName, phone, email, password) {
 export function loginUser(email, phone, password){
     return {
         type: LOGIN_USER,
-        payload: AxiosService.loginUser({email, phone, password})
+        payload: AxiosService.loginUser(email, phone, password)
     }
 }
 

@@ -6,13 +6,13 @@ const Footer = (props) => {
           <footer className="container"> 
             <div className="container__row">
               <div className="container__col-4">
-                <h4 className="title">Navigation</h4>
+                <h4 className="title m-r-auto">Navigation</h4>
                 <nav className="list">
-                    <li className="bottom-nav-link">products</li>
-                    <li className="bottom-nav-link">features</li>
-                    <li className="bottom-nav-link">solutions</li>
-                    <li className="bottom-nav-link">pricing</li>
-                    <li className="bottom-nav-link">Contact us</li>
+                    <li className="">products</li>
+                    <li className="">features</li>
+                    <li className="">solutions</li>
+                    <li className="">pricing</li>
+                    <li className="">Contact us</li>
                 </nav>
               </div>
               <div className="container__col-4">

@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {verifyPhone, sendPhoneCode, sendEmailCode, verifyEmail} from '../../redux/reducers/verifyReducer';
 import * as RegexService from '../../services/RegexService';
 
 import FormButton from '../../components/buttons/FormButton';
 import FormInput from '../../components/inputs/FormInput';
+import FormLink from '../../components/links/FormLink';
 
 const RecoveryForm = (props) => {
     const [email, setEmail] = useState('');
@@ -46,7 +46,7 @@ const RecoveryForm = (props) => {
         {/* INSTRUCTIONAL P TAG */}
         <div className="container__row m-t-1">
             <div className="container__col-12">
-                <p className="caption text-center">Please enter email and phone linked to your account.</p>
+                <p className="caption align-text">Please enter your email or phone linked to your account.</p>
             </div>
         </div>
         {/* EMAIL INPUT */}
@@ -73,7 +73,7 @@ const RecoveryForm = (props) => {
             <div className="container__col-12">
                 <div className="container__row">
                     <hr className="container__col-5 divider-line"/>
-                    <p className="container__col-1 caption">AND</p>
+                    <p className="container__col-1 caption">OR</p>
                     <hr className="container__col-5 divider-line"/>
                 </div>
             </div>
@@ -111,29 +111,25 @@ const RecoveryForm = (props) => {
         </div>
         {/* LOGIN LINK */}
         <div className="container__row">
-            <Link to="/auth" className="link container__col-12">
-                <FormButton 
-                    name="login" 
-                    disable={true}
-                    goalMet={false}
-                    displayText={'Opps, back to login!'}
-                    styling={'btn-lnk-md-blue'}
-                    handleClick={() => {}}
+            <div className="container__col-12">
+                <FormLink
+                name={'login'}
+                where={'/auth'}
+                displayText={'Opps, back to login!'} 
+                styling={'Formlink-md-blue'}
                 />
-            </Link>
+            </div>
         </div>
         {/* SIGNUP LINK */}
         <div className="container__row">
-            <Link to="/auth/signup" className="link container__col-12">
-                <FormButton
-                    name="signup" 
-                    disable={true}
-                    goalMet={false}
-                    displayText={'Dont have an account?'}
-                    styling={'btn-lnk-md-blue'}
-                    handleClick={() => {}}
+            <div className="container__col-12">
+                <FormLink
+                name={'signup'}
+                where={'/auth/signup'}
+                displayText={'Dont have an account?'} 
+                styling={'Formlink-md-blue'}
                 />
-            </Link>
+            </div>
         </div>
     </div>
   );

@@ -48,9 +48,11 @@ app.post('/auth/login', auth.login);
 app.post('/auth/register', auth.register);
 app.post('/auth/logout', auth.logout);
 app.get('/auth/user', auth.getUser);
+app.get('/verify', ver.getVer);
 app.post('/verify/email', ver.sendEmailCode);
 app.post('/verify/phone', ver.sendPhoneCode);
 app.put('/verify/phone', ver.verifyPhone);
 app.put('/verify/email', ver.verifyEmail);
+app.put('/verify/tfa', ver.updateTwoFactorAuth);
 
 app.listen(SERVER_PORT, () => console.log(`Connected to port ${SERVER_PORT}`));

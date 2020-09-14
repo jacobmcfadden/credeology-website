@@ -30,6 +30,7 @@ CREATE TABLE users (
     verify_email DATE,
     created_at DATE NOT NULL,
     updated_at DATE,
+    two_factor_auth BOOLEAN NOT NULL,
     is_admin BOOLEAN NOT NULL
 );
 

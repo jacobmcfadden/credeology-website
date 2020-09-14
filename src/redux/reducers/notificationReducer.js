@@ -1,18 +1,52 @@
-import {ADD_NOTIFICATION, REMOVE_NOTIFICATION, CLEAR_ALL, ADD_ERROR, ADD_WARNING} from '../constants/types';
+import {ADD_EVENT, ADD_ERROR, ADD_WARNING, ADD_SUCCESS, ADD_SYSTEM, REMOVE_NOTIFICATION, CLEAR_ALL, TOGGLE_BANNER} from '../constants/types';
 import createNotification from '../factories/createNotification';
+
 const initialState = {
     items:[],
     isOpen: false,
     isLoading: false
 };
-
-export function addNotification(options = {}) {
+  
+export function addEvent(message = {}) {
+    const options = {message: message, messageType: 'EventMessage'};
     return {
         payload: createNotification(options),
-        type: ADD_NOTIFICATION
-    };
-  }
-  
+        type: ADD_ERROR
+    }
+}
+
+export function addError(message) {
+    const options = {message: `${message}`, messageType: 'ErrorMessage'};
+    return {
+        payload: createNotification(options),
+        type: ADD_ERROR
+    }
+}
+
+export function addWarning(message = {}) {
+    const options = {message: message, messageType: 'WarningMessage'};
+    return {
+        payload: createNotification(options),
+        type: ADD_WARNING
+    }
+}
+
+export function addSuccess(message = {}) {
+    const options = {message: `${message}`, messageType: 'SuccessMessage'};
+    return {
+        payload: createNotification(options),
+        type: ADD_SUCCESS
+    }
+}
+
+export function addSystem(message = {}) {
+    const options = {message: message, messageType: 'SystemMessage'};
+    return {
+        payload: createNotification(options),
+        type: ADD_SYSTEM
+    }
+}
+
   export function removeNotification(id) {
     return {
         payload: id,
@@ -25,77 +59,32 @@ export function clearAll(){
         type: CLEAR_ALL
     }
 }
-
-export function addError(options = {}) {
-    console.log(options, 'at ADD ERROR')
+export function toggleBanner(){
     return {
-        payload: createNotification(options),
-        type: ADD_ERROR
+        type: TOGGLE_BANNER
     }
 }
-
-export function addWarning(options = {}) {
-    console.log(options)
-    return {
-        payload: createNotification(options),
-        type: ADD_WARNING
-    }
-}
-
-// export function errorReducer(state = initState, action){
-//     const { error } = action;
-   
-//     if(error){
-//     return {
-//     error: error,
-//     isOpen: true
-//     }
-//     }else if(action.type === HIDE_ERROR){
-//     return {
-//     error: null,
-//     isOpen: false
-//     }
-//     }
-   
-//     return state;
-//    }
-
 
 export default function(state = initialState, action){
     const {payload, type}=action;
     switch(type){
-        case ADD_WARNING:
-            console.log(action.payload, 'add error non async')
-            return {...state, isLoading: false, items: [payload]};
+        case ADD_EVENT:
+            return {...state, items: [...state.items, payload]};
         case ADD_ERROR:
-            console.log(action.payload, 'add error pend')
-            return {...state, items: [action.payload]};
-        case ADD_ERROR + '_FULFILLED':
-            console.log(action.payload, 'add error fullfilled')
-            return {...state, isLoading: false, items: action.payload};
-        case ADD_ERROR + '_REJECTED':
-            console.log(action.payload, 'add error rejected')
-            return {...state, isLoading: false, items: action.payload};
-        case ADD_NOTIFICATION + '_PENDING':
-            return {...state, };
-        case ADD_NOTIFICATION + '_FULFILLED':
-            return {...state, };
-        case ADD_NOTIFICATION + '_REJECTED':
-            return {...state, };
+            return {...state, items: [...state.items, payload]};
+        case ADD_WARNING:
+            return {...state, items: [...state.items, payload]};
+        case ADD_SUCCESS:
+            return {...state, items: [...state.items, payload]};
+        case ADD_SYSTEM:
+            return {...state, items: [...state.items, payload]};
         case REMOVE_NOTIFICATION:
-            return {...state, };
-        case REMOVE_NOTIFICATION + '_FULFILLED':
-            return {...state, };
-        case REMOVE_NOTIFICATION + '_REJECTED':
-            return {...state, };
-        case CLEAR_ALL + '_PENDING':
-            return {...state, };
-        case CLEAR_ALL + '_FULFILLED':
-            return {...state, };
-        case CLEAR_ALL + '_REJECTED':
-            return {...state, };
+            return {...state, items: state.items.filter(item => item.id !== payload)}
+        case CLEAR_ALL:
+            return {...state, items: []};
+        case TOGGLE_BANNER:
+            return {...state, isOpen: !state.isOpen};
         default:
-            console.log(action)
             return state;
     }
 }

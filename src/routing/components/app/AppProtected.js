@@ -1,18 +1,14 @@
 import React from 'react';
 
-import AppNav from './navbars/AppNav';
-import AppSubNav from './subNavbars/AppSubNav';
-import Display from './displays/Display';
-import NotifyBanner from '../../../containers/lists/messages/NotifiyBanner';
-
+import AppNav from '../../../containers/sections/app/navbars/AppNav';
+import AppSubNav from '../../../containers/sections/app/subNavbars/AppSubNav';
+import Display from '../../../containers/sections/app/displays/Display';
 
 const AppProtected = (props) => {
   return (
-    <div className="AppProtected container__row">
+    <div className="AppProtected">
       <AppNav/>
       <AppSubNav/>
-      <NotifyBanner/>
-
       <Display/>
     </div>
   );

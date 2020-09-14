@@ -6,17 +6,18 @@ import Notification from '../../../components/messages/Notification';
 import {removeNotification} from '../../../redux/reducers/notificationReducer';
 
 const NotifyBanner = (props) => {
-    const {notificationItems, removeNotification} = props;
+    const {notificationItems} = props;
 
-    const handleClose = (event) => {
-      removeNotification(event.target.key);
+    const handleClose = (value) => {
+      props.removeNotification(value)
     }
+
     return (
       <div className="NotifyBanner container--fluid container__col-4 container__col-offset-8">          
-        {notificationItems.map(item => {
+        {notificationItems.map((item, index) => {
           const {id} = item;
           return (
-            <Notification key={id} messageType={item.messageType} message={item.message} handleClick={handleClose} />
+            <Notification key={index} messageType={item.messageType} messageId={id} message={item.message} handleClick={handleClose} />
           );
         })} 
       </div>

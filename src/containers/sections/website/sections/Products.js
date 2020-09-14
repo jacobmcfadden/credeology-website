@@ -3,7 +3,7 @@ import React from 'react';
 const Products = (props) => {
   return (
     <div className="Products">
-      <div className="section-dark">
+      <div className="section-blackd">
         <div className="container">
         <div className="container__row">
             <div className="container__col-12">

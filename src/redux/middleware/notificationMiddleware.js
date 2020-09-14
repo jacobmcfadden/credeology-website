@@ -1,25 +1,22 @@
-import isPromise from 'is-promise';
-import _ from "underscore";
-import {addError, addWarning} from '../reducers/notificationReducer';
-import {GET_USER} from '../constants/types';
+// import isPromise from 'is-promise';
 
-const getIt = /^GET_USER/i;
+// const getUser = /^GET_USER/i;
 
 export default function errorMiddleware(){
     return next => action => {
-        // If not a promise, continue on
-        if (!isPromise(action.payload)) {
-            return next(action);
-        }
-        console.log('errorMiddleware: action.type', action.type);
-        if (action.type) {       
-             // Dispatch initial pending promise, but catch any errors
-            
-        return next(action).catch(error => {
-            console.log('catching action', error);
-            return addError({message: 'Golfstream', messageType: "ErrorMsg"})
-        });
-        }
+
+        // // IF NOT A PROMISE GO TO NEXT
+        // if (!isPromise(action.payload)) {
+        //     // action.payload.data
+        //     return next(action);
+        // }
+
+        // console.log('PROMISE FOUND IN NOTIFICATION MIDDLEWARE: action.type', action.type);
+        // if (action.type.match(getUser)) {       
+        //      // Dispatch initial pending promise, but catch any errors
+        //     console.log('MAIN IF just caught:', action.type)
+        //     return next(action).catch(err => console.log('MAIN IF ERROR:', action.payload))
+        // }
 
         return next(action);
 

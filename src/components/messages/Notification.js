@@ -9,19 +9,19 @@ import ErrorIcon from '../../assets/icons/status/ErrorIcon';
 import CloseIcon from '../../assets/icons/system/CloseIcon';
 
 const Notification = (props) => {
-    const {message, messageType, handleClick} = props;
+    const {message, messageType, messageId} = props;
     
     const icon = () => {
         switch(messageType){
-            case 'Notification':
+            case 'EventMessage':
                 return <NotificationIcon className="noti-icon"/>;
-            case 'SuccessMsg':
+            case 'SuccessMessage':
                 return <SuccessIcon className="noti-icon"/>;
-            case 'WarningMsg':
+            case 'WarningMessage':
                 return <WarningIcon className="noti-icon"/>;
-            case 'ErrorMsg':
+            case 'ErrorMessage':
                 return <ErrorIcon className="noti-icon"/>;
-            case 'InfoMsg':
+            case 'SystemMessage':
                 return <InfoIcon className={'noti-icon'}/>;
             default:
                 return <InfoIcon className={'noti-icon'}/>;
@@ -29,12 +29,12 @@ const Notification = (props) => {
     }
 
     return (
-        <div className={`${messageType ? messageType : 'InfoMsg'}`}>
+        <div className={`${messageType ? messageType : 'SystemMessage'}`}>
             <div className="noti-container">
                 {icon()}
                 <p className="noti-message capt-show">{message}</p>
             </div>
-            <CloseIcon className="noti-close" onClick={e => handleClick(e)}/>
+            <CloseIcon className="noti-close" onClick={() => props.handleClick(messageId)}/>
         </div>
     );
 };

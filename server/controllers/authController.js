@@ -17,9 +17,12 @@ module.exports = {
                     firstName: user[0].first_name,
                     lastName: user[0].last_name,
                     phone: user[0].phone,
+                    isAdmin: user[0].is_admin
+                }
+                req.session.ver = {
                     isEmailVerified: user[0].verify_email ? true : false,
                     isPhoneVerified: user[0].verify_phone ? true : false,
-                    isAdmin: user[0].is_admin
+                    two_factor_auth: user[0].two_factor_auth
                 }
                 return res.status(200).send(req.session.user)
             } else {
@@ -52,9 +55,12 @@ module.exports = {
             firstName: newUser.first_name,
             lastName: newUser.last_name,
             phone: newUser.phone,
+            isAdmin: newUser.is_admin
+        }
+        req.session.ver = {
             isEmailVerified: newUser.verify_email ? true : false,
             isPhoneVerified: newUser.verify_phone ? true : false,
-            isAdmin: newUser.is_admin
+            two_factor_auth: newUser.two_factor_auth
         }
         res.status(200).send(req.session.user)
     },
