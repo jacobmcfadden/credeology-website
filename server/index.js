@@ -15,14 +15,12 @@ const {CONNECTION_STRING, SESSION_SECRET, SERVER_PORT}=process.env;
 
 const awsCtrl = require('./controllers/awsController');
 const auth = require('./controllers/authController');
-const ver = require('./controllers/verifyController');
 
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(twilioNotifications.notifyOnError);
-
 
 app.use(session({
     resave: false,
@@ -48,11 +46,13 @@ app.post('/auth/login', auth.login);
 app.post('/auth/register', auth.register);
 app.post('/auth/logout', auth.logout);
 app.get('/auth/user', auth.getUser);
-app.get('/verify', ver.getVer);
-app.post('/verify/email', ver.sendEmailCode);
-app.post('/verify/phone', ver.sendPhoneCode);
-app.put('/verify/phone', ver.verifyPhone);
-app.put('/verify/email', ver.verifyEmail);
-app.put('/verify/tfa', ver.updateTwoFactorAuth);
+app.post('/auth/recover', auth.recoverAccount);
+app.put('/auth/reset', auth.resetPassword);
+app.post('/verify/email', auth.sendEmailCode);
+app.post('/verify/phone', auth.sendPhoneCode);
+app.put('/verify/phone', auth.verifyPhone);
+app.put('/verify/email', auth.verifyEmail);
+app.put('/auth/tfa', auth.updateTwoFactorAuth);
+app.post('/verify/tfa', auth.twoFactorAuthentication)
 
 app.listen(SERVER_PORT, () => console.log(`Connected to port ${SERVER_PORT}`));

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {updateTwoFactorAuth} from '../../../../../../redux/reducers/verifyReducer';
+import {updateTwoFactorAuth} from '../../../../../../redux/reducers/authReducer';
 // import {updateUser} from '../../redux/reducers/authReducer';
 import {addWarning, addError, addSuccess} from '../../../../../../redux/reducers/notificationReducer';
 import * as RegexService from '../../../../../../services/RegexService';
@@ -43,7 +43,7 @@ const UserAccountSettings = (props) => {
             setEmailInvalid(true);
         }
     }    
-}
+  }
 
   const toggleTwoFactorAuth = () => {
     props.updateTwoFactorAuth(!twoFactorAuth).then(() => {
@@ -193,7 +193,7 @@ const mapStateToProps = (state) => ({
   phone: state.auth.user.phone,
   isLoading: state.auth.isLoading,
   isAuthenticated: state.auth.isAuthenticated,
-  twoFactorAuth: state.ver.twoFactorAuth
+  twoFactorAuth: state.auth.twoFactorAuth
 });
 
 export default connect(mapStateToProps, {addError, addSuccess, addWarning, updateTwoFactorAuth})(UserAccountSettings);

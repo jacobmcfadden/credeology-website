@@ -39,26 +39,26 @@ export function addSuccess(message = {}) {
     }
 }
 
-export function addSystem(message = {}) {
-    const options = {message: message, messageType: 'SystemMessage'};
+export function addSystem(options = {}) {
     return {
         payload: createNotification(options),
         type: ADD_SYSTEM
     }
 }
 
-  export function removeNotification(id) {
+export function removeNotification(id) {
     return {
         payload: id,
         type: REMOVE_NOTIFICATION
     };
-  }
+}
 
 export function clearAll(){
     return {
         type: CLEAR_ALL
     }
 }
+
 export function toggleBanner(){
     return {
         type: TOGGLE_BANNER

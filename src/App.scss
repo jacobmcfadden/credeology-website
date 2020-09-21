@@ -23,20 +23,28 @@
   flex-direction: column;
 }
 
-.Website, .Auth, .Verify {
-  background-color: $dark-shade;
-}
-
 .Auth, .Verify {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media(max-width: 575px) {
+    background-color: $light-shade;
+  }
+  @media(min-width: 576px){
+    background-color: $dark-shade;
+  }
 }
 
 .Authform {
   border-radius: .5rem;
-  width: 378px;
-  @extend .m-v-1;
+  background-color: $light-shade;
+  @extend .p-a-1;
+  @extend .container__col-12;
+  @extend .container__col-sm-6;
+  @extend .container__col-md-5;
+  @extend .container__col-lg-4;
+  @extend .container__col-xl-3;
+
 }
 
 .CredeologyLogo {
@@ -50,6 +58,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  background-color: black;
   // background-color: black;
 }
 
@@ -139,11 +148,40 @@
   overflow: hidden;
 }
 
-.Title {
+.Headline {
+  @extend .bg-primary;
+  @extend .container__row;
+
   font-size: 1.8rem;
   font-weight: $font-light;
   font-family: $lato;
   color: $medium-shade;
+  &-primary {
+    @extend .Headline;
+    color: $blue-primary;
+  }
+}
+
+.Title {
+  font-size: 1.5rem;
+  font-weight: $font-light;
+  font-family: $lato;
+  color: $medium-shade;
+  &-primary {
+    @extend .Title;
+    color: $blue-primary;
+  }
+}
+
+.Subtitle {
+  font-size: 1.3rem;
+  font-weight: $font-light;
+  font-family: $lato;
+  color: $medium-shade;
+  &-primary {
+    @extend .Subtitle;
+    color: $blue-primary;
+  }
 }
 
 .Phrase {
@@ -151,6 +189,16 @@
   font-weight: $font-light;
   font-family: $roboto;
   color: $medium-shade;
+  &-primary {
+    @extend .Phrase;
+    color: $blue-primary;
+    font-weight: $font-regular;
+  }
+  &-light {
+    @extend .Phrase;
+    color: $light-shade;
+    font-weight: $font-regular;
+  }
 }
 
 .UserAccount {
@@ -355,6 +403,7 @@
     }
   }
 }
+
 // Banners
 .section-banner {
   width: 100%;
@@ -510,7 +559,7 @@
   text-align: center;
   color: $light-shade;
   margin-bottom: .5rem;
-  font-weight: $font-black;
+  font-weight: $font-light;
   font-size: 4rem;
 }
 
@@ -635,7 +684,7 @@ background-color: rgba(131, 15, 255, 0.9);
   &-std {
     &-sm {
       @extend .btn;
-      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .13rem, 400);
+      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .07rem, 400);
       &-light {
         @extend .btn-std-sm;
         @include btn-theme($light-shade, $light-shade, $orange-primary);
@@ -655,7 +704,7 @@ background-color: rgba(131, 15, 255, 0.9);
     }
     &-md {
       @extend .btn;
-      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .13rem, 400);
+      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .08rem, 400);
       &-light {
         @extend .btn-std-md;
         @include btn-theme($light-shade, $light-shade, $orange-primary);
@@ -675,7 +724,7 @@ background-color: rgba(131, 15, 255, 0.9);
     }
     &-lg {
       @extend .btn;
-      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .15rem, 500);
+      @include btn-size(.15rem, .85rem 1.5rem .85rem 1.5rem, .75rem, .10rem, 400);
       &-light {
         @extend .btn-std-lg;
         @include btn-theme($light-shade, $light-shade, $orange-primary);
@@ -697,7 +746,7 @@ background-color: rgba(131, 15, 255, 0.9);
   &-frm {
     &-sm {
       @extend .btn;
-      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .13rem, 400);
+      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .07rem, 400);
       &-light {
         @extend .btn-frm-sm;
         @include btn-theme($light-shade, transparent, $light-shade);
@@ -717,7 +766,7 @@ background-color: rgba(131, 15, 255, 0.9);
     }
     &-md {
       @extend .btn;
-      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .13rem, 400);
+      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .08rem, 400);
       &-light {
         @extend .btn-frm-md;
         @include btn-theme($light-shade, transparent, $light-shade);
@@ -737,7 +786,7 @@ background-color: rgba(131, 15, 255, 0.9);
     }
     &-lg {
       @extend .btn;
-      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .15rem, 500);
+      @include btn-size(.15rem, .75rem 1.5rem .75rem 1.5rem, .75rem, .10rem, 400);
       &-light {
         @extend .btn-frm-lg;
         @include btn-theme($light-shade, transparent, $light-shade);
@@ -1006,28 +1055,28 @@ background-color: rgba(131, 15, 255, 0.9);
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .13rem, 400);
+      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .08rem, 400);
       @include btn-theme(transparent, transparent, $light-shade);
     }
     &-dark {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .13rem, 400);
+      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .08rem, 400);
       @include btn-theme(transparent, transparent, $dark-shade);
     }
     &-blue {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .13rem, 400);
+      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .08rem, 400);
       @include btn-theme(transparent, transparent, $blue-primary);
     }
     &-orange {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .1rem, 400);
+      @include btn-size(.15rem, .35rem 1rem .35rem 1rem, .75rem, .08rem, 400);
       @include btn-theme(transparent, transparent, $orange-primary);
     }
   }
@@ -1036,28 +1085,28 @@ background-color: rgba(131, 15, 255, 0.9);
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .12rem, 500);
+      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .08rem, 500);
       @include btn-theme(transparent, transparent, $light-shade);
     }
     &-dark {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .12rem, 500);
+      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .08rem, 500);
       @include btn-theme(transparent, transparent, $dark-shade);
     }
     &-blue {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .12rem, 500);
+      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .08rem, 500);
       @include btn-theme(transparent, transparent, $blue-primary);
     }
     &-orange {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .12rem, 500);
+      @include btn-size(.15rem, .5rem 1.25rem .5rem 1.25rem, .75rem, .08rem, 500);
       @include btn-theme(transparent, transparent, $orange-primary);
     }
   }
@@ -1066,28 +1115,28 @@ background-color: rgba(131, 15, 255, 0.9);
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .13rem, 500);
+      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .09rem, 500);
       @include btn-theme(transparent, transparent, $light-shade);
     }
     &-dark {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .13rem, 500);
+      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .09rem, 500);
       @include btn-theme(transparent, transparent, $dark-shade);
     }
     &-blue {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .13rem, 500);
+      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .09rem, 500);
       @include btn-theme(transparent, transparent, $blue-primary);
     }
     &-orange {
       text-decoration: none;
       text-align: center;
       @include button(none);
-      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .13rem, 500);
+      @include btn-size(.15rem, 1rem 1.5rem 1rem 1.5rem, .75rem, .09rem, 500);
       @include btn-theme(transparent, transparent, $orange-primary);
     }
   }
@@ -1095,46 +1144,65 @@ background-color: rgba(131, 15, 255, 0.9);
 }
 
 // INPUT
+.FormInput {
+  &:focus-within {
+    .label {
+        color: $blue-primary; 
+    }
+    .input {
+      border-color: $blue-primary;
+    }
+  }
+  &.valid:focus-within {
+    .label {
+        color: $success-color; 
+    }
+    .input {
+      border-color: $success-color;
+    }
+  }
+  &.invalid:focus-within {
+    .label {
+        color: $error-color; 
+    }
+    .input {
+      border-color: $error-color;
+    }
+  }
+  
+}
+
 .input {
   padding: .75rem;
   border: solid 1px $medium-shade;
   border-radius: 3px;
-  margin-top: 12px;
-  background: none;
+  background: $background-color;
   outline: 0;
-  z-index: 2;
   &.valid {
     border-color: $success-color;
-  }
-  &.valid + .label {
-    background: none;
-    color: $success-color;
-    font-size: 70%;
-    padding: 1px 6px;
-    z-index: 2;
-    text-transform: uppercase;
   }
   &.invalid {
     border-color: $error-color;
   }
-  &.invalid + .label {
-    background: none;
+}
+
+// Label
+.label {
+  transition: // not padding
+  background 0.2s,
+  color 0.2s,
+  top 0.2s,
+  bottom 0.2s,
+  right 0.2s,
+  left 0.2s;
+  font-size: 70%;
+  color: $light-shade;
+  padding: 3px 4px;
+  &.valid {
+    color: $success-color;
+  }
+  &.invalid {
     color: $error-color;
-    font-size: 70%;
-    padding: 1px 6px;
-    z-index: 2;
-    text-transform: uppercase;
-  }
-  &:focus {
-    border-color: $blue-primary;
-  }
-  &:focus + .label {
-    background: none;
-    color: $blue-primary;
-    font-size: 70%;
-    padding: 1px 6px;
-    z-index: 2;
-    text-transform: uppercase;
   }
 }
 
@@ -1249,26 +1317,9 @@ background-color: rgba(131, 15, 255, 0.9);
   }
 }
 
-// Label
-.label {
-  transition: // not padding
-    background 0.2s,
-    color 0.2s,
-    top 0.2s,
-    bottom 0.2s,
-    right 0.2s,
-    left 0.2s;
-    font-size: 70%;
-    position: relative;
-    top:-55px;
-    left: -2px;
-    color: $light-shade;
-    padding: 7px 6px;
-}
-
 // Message display styling
-.message-display {
-  height: 1rem;
+.Message {
+  @extend .p-l-25;
 }
 
 // isLoading Animation
@@ -1354,6 +1405,12 @@ background-color: rgba(131, 15, 255, 0.9);
     }
   }
   &-t {
+    &-25 {
+      margin-top: .25rem;
+    }
+    &-50 {
+      margin-top: .5rem;
+    }
     &-1 {
       margin-top: 1rem;
     }
@@ -1476,6 +1533,12 @@ background-color: rgba(131, 15, 255, 0.9);
     }
   }
   &-l {
+    &-25 {
+      padding-left: .25rem;
+    }
+    &-50 {
+      padding-left: .5rem;
+    }
     &-1 {
       padding-left: 1rem;
     }
@@ -1632,7 +1695,6 @@ background-color: rgba(131, 15, 255, 0.9);
 .show {
   animation: spin-half ease-in-out 2s 1;
 }
-
 
 // Disable Element
 .disabled {

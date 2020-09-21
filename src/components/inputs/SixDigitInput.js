@@ -1,38 +1,6 @@
 import React, {useState, useRef} from 'react';
 import { useEffect } from 'react';
 
-function useKeyPress(targetKey) {
-  // State for keeping track of whether key is pressed
-  const [keyPressed, setKeyPressed] = useState(false);
-
-  // If pressed key is our target key then set to true
-  function downHandler({ key }) {
-    if (key === targetKey) {
-      setKeyPressed(true);
-    }
-  }
-
-  // If released key is our target key then set to false
-  const upHandler = ({ key }) => {
-    if (key === targetKey) {
-      setKeyPressed(false);
-    }
-  };
-
-  // Add event listeners
-  useEffect(() => {
-    window.addEventListener('keydown', downHandler);
-    window.addEventListener('keyup', upHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener('keydown', downHandler);
-      window.removeEventListener('keyup', upHandler);
-    };
-  }); // Empty array ensures that effect is only run on mount and unmount
-
-  return keyPressed;
-}
-
 const SixDigitButton = (props) => {
 
     const {show, goalMet, handleCode} = props;
@@ -51,7 +19,6 @@ const SixDigitButton = (props) => {
     const input4 = useRef(null);
     const input5 = useRef(null);
     const input6 = useRef(null);
-    const bSpace = useKeyPress('Backspace')
     
     useEffect(() => {
       if(show) {
@@ -69,23 +36,11 @@ const SixDigitButton = (props) => {
           input6.current.focus()
         } else if(first && second && third && fourth && fifth && sixth) {
           setCode(`${first}${second}${third}${fourth}${fifth}${sixth}`)
+          handleCode(code)
         }      
       } else {
       }
-    }, [show, first, second, third, fourth, fifth, sixth, code]);
-
-    useEffect(() => {
-      if(code && show && !goalMet) {
-        handleCode(code)
-      }
-    }, [code, show, goalMet, handleCode]);
-
-  const handleKeyPress = (event) => {
-        if (bSpace) {
-          console.log(bSpace)
-            event.target.previous.focus();
-        }
-    }
+    });
 
   return (
     <div className={`SixDigitButton m-v-1 ${show && !goalMet ? "" : "hidden"}`}>
@@ -104,7 +59,7 @@ const SixDigitButton = (props) => {
               placeholder="-" 
               ref={input1}
               onChange={event => setFirst(event.target.value.slice(0, event.target.maxLength))}
-              onKeyPress={handleKeyPress}/>
+              />
 						</div>
 						<div className="mm-number-input-item">
               <input 
@@ -117,7 +72,7 @@ const SixDigitButton = (props) => {
               placeholder="-" 
               ref={input2}
               onChange={event => setSecond(event.target.value.slice(0, event.target.maxLength))}
-              onKeyPress={handleKeyPress}/>
+              />
 						</div>
 						<div className="mm-number-input-item">
               <input 

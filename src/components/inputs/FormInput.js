@@ -18,38 +18,30 @@ const FormInput = (props) => {
 
     const [inputInitiated, setInputInitiated] = useState(false);
 
-    const dynamicStatus = (event) => {
-        if(event.target.value === '') {
-            setInputInitiated(false);
-            props.handleClick(event);
-        } else {
-            setInputInitiated(true);
-            props.handleClick(event);
-        }
-    }
-
     return (
-        <div className="FormInput container__row">
+        <div className={`FormInput ${inputInitiated && inputInvalid ? 'invalid' : ''} ${inputInitiated && !inputInvalid ? 'valid' : ''} container__row m-t-25`}>
+            <label htmlFor={name} className={`label ${inputInitiated && inputInvalid ? 'invalid' : ''} ${inputInitiated && !inputInvalid ? 'valid' : ''}`}>{label}</label>
             <input 
                 className={`
                     container__col-12
                     ${styling} 
                     ${hide ? "hidden" : ""} 
-                    ${inputInitiated && inputInvalid ? 'invalid' : ''}
-                    ${inputInitiated && !inputInvalid ? 'valid' : ''}
-                `} 
+                    ${inputInitiated && inputInvalid ? 'invalid' : ''} ${inputInitiated && !inputInvalid ? 'valid' : ''}
+                    `} 
                 id={inputId}
                 name={name} 
                 value={value} 
                 type={type}
                 placeholder={placeholder} 
                 required={required}
-                onChange={event => dynamicStatus(event)} 
+                onChange={event => {
+                    props.handleClick(event);
+                    event.target.value === '' ? setInputInitiated(false) : setInputInitiated(true);
+                }}
             />
-            <label htmlFor={name} className="label">{label}</label>
             <Message
-            message={inputInitiated && inputInvalid ? validationMessage : ''}
-            messageColor={'caption-error'}
+            message={validationMessage}
+            messageColor={inputInitiated && inputInvalid ? 'caption-error' : 'caption-light'}
             useIcon={false}
             inline={true}
             />

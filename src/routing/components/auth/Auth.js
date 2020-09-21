@@ -12,23 +12,21 @@ const Auth = (props) => {
   return (
     <div className="Auth">
       <div className="container">
-          <div className="container__row">
-            <div className="container__col-12">
-              <div className="container bg-light p-a-1 Authform">
-                <div className="container__row p-v-1">
-                  <CredeologyLogo logoType="form"/>
-                  <div className="container__col-10 container__col-offset-1">
-                    <Switch>
-                      <Route path={`${props.match.path}/signup`} component={SignupForm} />
-                      <Route path={`${props.match.path}/recovery`} component={RecoveryForm} />
-                      <Route component={LoginForm} />
-                    </Switch>
-                  </div>
+          <div className="container__row justify-center">
+            <div className="Authform">
+              <div className="container__row m-b-1 m-t-2">
+                <CredeologyLogo logoType="form"/>
+                <div className="container__row ">
+                  <Switch>
+                    <Route path={`${props.match.path}/signup`} component={SignupForm} />
+                    <Route path={`${props.match.path}/recovery`} component={RecoveryForm} />
+                    <Route component={LoginForm} />
+                  </Switch>
                 </div>
               </div>
             </div>
           </div>
-      </div>
+        </div>
     </div>
   );
 }

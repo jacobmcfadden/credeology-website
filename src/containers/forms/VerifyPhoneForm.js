@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {verifyPhone, sendPhoneCode, setPhoneSkip} from '../../redux/reducers/verifyReducer';
+import {verifyPhone, sendPhoneCode, setPhoneSkip} from '../../redux/reducers/authReducer';
 import * as RegexService from '../../services/RegexService';
 import {addWarning, addSuccess, addError} from '../../redux/reducers/notificationReducer';
 import SixDigitButton from '../../components/inputs/SixDigitInput';
@@ -10,7 +10,7 @@ const VerifyPhoneForm = (props) => {
     const [phoneCodeSent, setPhoneCodeSent] = useState(false)
   
     const sendPhoneCode = (event) => {
-        props.sendPhoneCode(props.userId, props.phone).then(() => {
+        props.sendPhoneCode().then(() => {
             setPhoneCodeSent(true);
             props.addSuccess('Phone verification code has been sent!')
         }).catch ((err) => {
@@ -35,19 +35,19 @@ const VerifyPhoneForm = (props) => {
     return (
     <div className="VerifyForm container__col-12 m-t-1">
         {/* PHONE VERIFICATION SECTION */}
-        <div className="m-t-2">
+        <div className="container__row justify-center m-b-1">
             
-            <p className="uppercase-title container__row-center">PHONE VERIFICATION</p>
-            <p className={`caption container__row justify-center m-t-1 ${props.isPhoneVerified ? 'hidden' : ''}`}>Credeology will send a verification code to phone number:</p>
-            <p className={`caption-blue container_row align-text m-b-1 ${props.isPhoneVerified ? 'hidden' : ''}`}>{RegexService.formatInput(props.phone, 'phone')}</p>
+            <p className="Subtitle">Phone Verification</p>
+            <p className={`Phrase align-text m-t-1 ${props.isPhoneVerified ? 'hidden' : ''}`}>Credeology will send a verification code to phone number:</p>
+            {props.phone ? <p className={`Phrase-primary container_row align-text m-t-50 m-b-1 ${props.isPhoneVerified ? 'hidden' : ''}`}>{RegexService.formatInput(props.phone, 'phone')}</p> : '' }
   
-            <span className="container__row-center">
+            <span className="container__row justify-center">
                 <SixDigitButton 
                     show={phoneCodeSent}
                     goalMet={props.isPhoneVerified}
                     handleCode={verifyPhone}
                 />
-                <div className="container__col-12 m-t-1">
+                <div className="container__col-12 m-t-50 m-b-25">
                     <FormButton 
                         name="phone"
                         disable={phoneCodeSent}
@@ -58,7 +58,7 @@ const VerifyPhoneForm = (props) => {
                     />
                 </div>
             </span> 
-            <span className="container__row-center m-t-1">
+            <span className="container__row justify-center m-t-50">
                 <div className="container__col-12 link">
                     <FormButton 
                         name="skip"
@@ -77,8 +77,8 @@ const VerifyPhoneForm = (props) => {
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    isPhoneVerified: state.ver.isPhoneVerified,
-    isPhoneVerifySkip: state.ver.isPhoneVerifySkip,
+    isPhoneVerified: state.auth.isPhoneVerified,
+    isPhoneVerifySkip: state.auth.isPhoneVerifySkip,
     isLoading: state.auth.isLoading,
     phone: state.auth.user.phone
   });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 import UserAccountSettings from './UserAccountSettings';
 import UserAccountActivity from './UserAccountActivity';
@@ -13,9 +13,11 @@ const UserAccount = (props) => {
   const {firstName, lastName, email, phone, } = props;
   
   const setUserLoggedOut = async () => {
-    props.logoutUser();
+    props.logoutUser().then((res) => {
+     return <Redirect push to={'/auth'} />;
+    });
   }
-
+console.log()
   return (
     <div className="UserAccount">
       <div className="container__row">
@@ -86,8 +88,8 @@ const UserAccount = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isEmailVerified: state.auth.user.isEmailVerified,
-  isPhoneVerified: state.auth.user.isPhoneVerified,
+  isEmailVerified: state.auth.isEmailVerified,
+  isPhoneVerified: state.auth.isPhoneVerified,
   isPhoneVerifySkip: state.auth.isPhoneVerifySkip,
   userId: state.auth.user.id,
   firstName: state.auth.user.firstName,

@@ -11,7 +11,7 @@ const items = [
 ]
 
 
-const AppNav = (props, {match}) => {
+const AppNav = (props) => {
   let location = useLocation();
   const [navExpanded, setNavExpanded] = useState(false);
   const {firstName, lastName} = props;

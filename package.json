@@ -32,7 +32,8 @@
     "redux": "^4.0.5",
     "redux-promise-middleware": "^6.1.2",
     "soda-js": "^0.2.3",
-    "twilio": "^3.49.1"
+    "twilio": "^3.49.1",
+    "underscore": "^1.11.0"
   },
   "scripts": {
     "start": "react-scripts start",

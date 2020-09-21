@@ -2,7 +2,7 @@ let id = 0;
 
 const defaultOptions = {
   messageType: "SystemMessage",
-  message: "Notification Content failed to come through"
+  message: ""
 };
 
 export default function createNotification(options) {

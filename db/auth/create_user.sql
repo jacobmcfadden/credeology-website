@@ -3,5 +3,5 @@ INSERT INTO users
 VALUES
 ($1, $2, $3, $4, $5, $6, $7);
 
-SELECT id, email, first_name, last_name, phone, verify_phone, verify_email, is_admin FROM users
+SELECT * FROM users
 WHERE email = $1;

@@ -9,33 +9,33 @@ import FormInput from '../../components/inputs/FormInput';
 import FormLink from '../../components/links/FormLink';
 
 const LoginForm = (props) => {
-    const [email, setEmail] = useState('');
-    const [emailInvalid, setEmailInvalid] = useState(false);
-    const [phone, setPhone] = useState('');
-    const [phoneInvalid, setPhoneInvalid] = useState(false);
+    const [contact, setContact] = useState('');
+    const [contactInvalid, setContactInvalid] = useState(false);
     const [password, setPassword] = useState('');
     const [passwordInvalid, setPasswordInvalid] = useState(false);
+    const [isEmail, setIsEmail] = useState(false);
+    const [isPhone, setIsPhone] = useState(false);
 
     const onInputChange = (event) => {
-        if(event.target.name === "phone") {
-            if(RegexService.validateInput(event.target.value, event.target.name)){
+        if(event.target.name === "contact") {
+            if(RegexService.validateInput(event.target.value, 'phone')){
                 // Format check passed
-                setPhone(event.target.value);
-                setPhoneInvalid(false);
+                setContact(RegexService.formatInput(event.target.value, 'phone'));
+                setContactInvalid(false);
+                setIsPhone(true);
+                setIsEmail(false);
+            } else if(RegexService.validateInput(event.target.value, 'email')){
+                // Format check passed
+                setContact(RegexService.formatInput(event.target.value, 'email'));
+                setContactInvalid(false);
+                setIsPhone(false);
+                setIsEmail(true);
             } else {
                 // the format check failed
-                setPhone(event.target.value);
-                setPhoneInvalid(true);
-            }
-        } else if(event.target.name === "email") {
-            if(RegexService.validateInput(event.target.value, event.target.name)){
-                // Format check passed
-                setEmail(event.target.value);
-                setEmailInvalid(false);
-            } else {
-                // the format check failed
-                setEmail(event.target.value);
-                setEmailInvalid(true);
+                setContact(event.target.value);
+                contact !== '' ? setContactInvalid(true) : setContactInvalid(false);
+                setIsPhone(false);
+                setIsEmail(false);
             }
         } else if(event.target.name === "password") {
             if(RegexService.validateInput(event.target.value, event.target.name)){
@@ -51,80 +51,59 @@ const LoginForm = (props) => {
     };
 
     const login = (event) => {
-        if(password && (email || phone)){
-            if(event === 'login' && !emailInvalid && !passwordInvalid && !phoneInvalid) {
-                props.loginUser(email, phone, password).then((res) => {
-                    props.addSuccess('Login was successful!')
-                }).catch((err) => {
-                    props.addError('You have entered invalid login credentials.')
-                })   
+        if(password && contact){
+            if(event === 'login' && !contactInvalid && !passwordInvalid) {
+                props.loginUser(contact, password)
+                .then(res => {
+                    if(res) {
+                        if(res.action.type.includes('_FULFILLED')) {
+                            props.addSuccess('Login successful!')
+                        }
+                    }
+                })
             } else { 
                 props.addWarning('Please correct input errors listed below each input field.')
             }
         } else {
-            props.addWarning('Email or phone, and password cannot be left blank.')
+            props.addWarning('Both Email/Phone and Password inputs must be filled out.')
         }
-
     };
 
-    return (
-        <div className="LoginForm container m-t-2">
-            {/* TITLE */}
-            <div className="container__row">
-                <p className="container__col-12 title">ACCOUNT LOGIN</p>
-            </div>
-            {/* PHONE INPUT */}
-            <div className="container__row m-t-1">
-                <div className="container__col-12">
-                    <FormInput
-                        styling={'input'}
-                        hide={false}
-                        inputInvalid={phoneInvalid}
-                        inputId={'phone'}
-                        name={'phone'}
-                        value={RegexService.formatInput(phone, 'phone')}
-                        type={'tel'}
-                        placeholder={'Phone Number'}
-                        required={true}
-                        handleClick={onInputChange}
-                        label={'Phone Number'}
-                        validationMessage={'Phone numbers are required to be in a 10 digit format.'}
+    const inputLabelResult = () => {
+        if(isEmail && !isPhone) {
+            return 'Email Address';
+        } else if(!isEmail && isPhone) {
+            return 'Phone Address';
+        } else {
+            return 'Email/Phone';
+        }
+    }
 
-                    />
-                </div>
+    return (
+        <div className="LoginForm container__row m-t-2 m-h-1">
+            {/* TITLE */}
+            <div className="container__row justify-center m-b-1">
+                <p className="Subtitle-primary">Account Login</p>
             </div>
-            {/* OR DIVIDER LINE */}
-            <div className="container__row">
-                <div className="container__col-12">
-                    <div className="container__row">
-                        <hr className="container__col-5 divider-line"/>
-                        <p className="container__col-1 caption m-v-auto text-center">OR</p>
-                        <hr className="container__col-5 divider-line"/>
-                    </div>
-                </div>
-            </div>
-            {/* EMAIL INPUT */}
-            <div className="container__row">  
-                <div className="container__col-12">    
+            {/* CONTACT INPUT */}
+            <div className="container__col-12">  
                     <FormInput
                         styling={'input'}
                         hide={false}
-                        inputInvalid={emailInvalid}
-                        inputId={'email'}
-                        name={'email'}
-                        value={email}
-                        type={'email'}
-                        placeholder={'Email Address'}
+                        inputInvalid={contactInvalid}
+                        inputId={'contact'}
+                        name={'contact'}
+                        value={contact}
+                        type={'contact'}
+                        placeholder={'Email or Phone'}
                         required={true}
                         handleClick={onInputChange}
-                        label={'Email Address'}
-                        validationMessage={"Email Address's are required to contain a '@' and '.'"}
+                        label={inputLabelResult()}
+                        validationMessage={"Input must be a valid email address or 10 digit phone number."}
                     />
-                </div> 
             </div>
             {/* PASSWORD INPUT */}
-            <div className="container__row m-t-1">   
-                <div className="container__col-12">   
+            <div className="container__col-12">   
                     <FormInput
                         styling={'input'}
                         hide={false}
@@ -139,14 +118,13 @@ const LoginForm = (props) => {
                         label={'Password'}
                         validationMessage={'Passwords are required to be greater than 9 characters.'}
                     />
-                </div> 
             </div>
             {/* LOGIN BUTTON */}
             <div className="container__row m-v-1">
-                <div className="container__col-12 link">
+                <div className="container__col-12">
                     <FormButton
                         name="login" 
-                        goalMet={props.isAuthenticated}
+                        goalMet={props.isLoggedIn}
                         isLoading={props.isLoading}
                         displayText={'Login'}
                         styling={'btn-std-lg-orange'}
@@ -182,7 +160,7 @@ const LoginForm = (props) => {
 
 const mapStateToProps = (state) => ({
     isLoading: state.auth.isLoading,
-    isAuthenticated: state.auth.isAuthenticated
+    isLoggedIn: state.auth.isLoggedIn
   });
 
 export default connect(mapStateToProps, {loginUser, addError, addSuccess, addWarning})(LoginForm);

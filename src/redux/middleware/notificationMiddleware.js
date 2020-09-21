@@ -1,35 +1,26 @@
-// import isPromise from 'is-promise';
+import isPromise from 'is-promise';
+// import _ from 'underscore';
+import {GET_USER, LOGIN_USER} from '../constants/types';
+import {addSystem} from '../reducers/notificationReducer';
 
-// const getUser = /^GET_USER/i;
-
-export default function errorMiddleware(){
+export default function errorMiddleware(store){
     return next => action => {
 
-        // // IF NOT A PROMISE GO TO NEXT
-        // if (!isPromise(action.payload)) {
-        //     // action.payload.data
-        //     return next(action);
-        // }
+        // IF NOT A PROMISE BLOCK
+        if (!isPromise(action.payload)) {
+            return next(action)
+        }
+        // IF IT REACHES THIS POINT IT IS SOME FORM OF A PROMSIE
+        // HERE I AM ADDED A CATCH, TO CATCH ANY ERRORS AND SEND OUT A USER NOTIFICATION
+        // BUT ONLY FOR THE ACTION TYPES I HAVE SET UP A VALUE FOR
+        switch(action.type){
+            case GET_USER.type:
+                return next(action).catch((err) =>  {store.dispatch(addSystem(GET_USER.error))});
+            case LOGIN_USER.type:
+                return next(action).catch(() =>  {store.dispatch(addSystem(LOGIN_USER.error))});
+            default:
+                return next(action);
+        }
 
-        // console.log('PROMISE FOUND IN NOTIFICATION MIDDLEWARE: action.type', action.type);
-        // if (action.type.match(getUser)) {       
-        //      // Dispatch initial pending promise, but catch any errors
-        //     console.log('MAIN IF just caught:', action.type)
-        //     return next(action).catch(err => console.log('MAIN IF ERROR:', action.payload))
-        // }
-
-        return next(action);
-
-        // return next(action);
-        // switch(action.type){
-        //     case GET_USER + "_PENDING":
-        //         return next(action).catch(error => console.log(error));
-        //     case GET_USER + "_FULFILLED":
-        //         return next(action).catch(action => console.log(action));
-        //     case GET_USER + "_REJECTED":
-        //         return next(action).catch(action => console.log(action));
-        //     default:
-        //         return next(action);
-        // }
     } 
 }

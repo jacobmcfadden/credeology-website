@@ -4,8 +4,8 @@ const InlineMessage = (props) => {
     const {message, messageColor, margin} = props;
     
     return (
-        <div className={`Message container__row-nowrap ${margin}`}>
-            <p className={message ? messageColor : 'caption-light'}>{message}</p>
+        <div className={`Message container__col-12 ${margin}`}>
+            <p className={message ? messageColor : 'container__row caption-light'}>{message}</p>
         </div>
     );
 };

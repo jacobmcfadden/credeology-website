@@ -23,75 +23,83 @@ const SignupForm = (props) => {
     const [email, setEmail] = useState('');
     const [emailInvalid, setEmailInvalid] = useState(false);
 
-    const onInputChange = (event) => {
-        if(event.target.name === "firstName") {
-            if(RegexService.validateInput(event.target.value, event.target.name)){
-                // Format check passed
-                setFirstName(event.target.value);
-                setFirstNameInvalid(false);
-            } else {
-                // the format check failed
-                setFirstName(event.target.value);
-                setFirstNameInvalid(true);
-            }
-        } else if(event.target.name === "lastName") {
-            if(RegexService.validateInput(event.target.value, event.target.name)){
-                // Format check passed
-                setLastName(event.target.value);
-                setLastNameInvalid(false);
-            } else {
-                // the format check failed
-                setLastName(event.target.value);
-                setLastNameInvalid(true);
-            }
-        } else if(event.target.name === "phone") {
-            if(RegexService.validateInput(event.target.value, event.target.name)){
-                // Format check passed
-                setPhone(event.target.value);
-                setPhoneInvalid(false);
-            } else {
-                // the format check failed
-                setPhone(event.target.value);
-                setPhoneInvalid(true);
-            }
-        } else if(event.target.name === "email") {
-            if(RegexService.validateInput(event.target.value, event.target.name)){
-                // Format check passed
-                setEmail(event.target.value);
-                setEmailInvalid(false);
-            } else {
-                // the format check failed
-                setEmail(event.target.value);
-                setEmailInvalid(true);
-            }
-        } else if(event.target.name === "password") {
-            if(RegexService.validateInput(event.target.value, event.target.name)){
-                // Format check passed
-                setPassword(event.target.value);
-                setPasswordInvalid(false);
-                if(event.target.value === passwordConfirm) {
-                    setPasswordConfirmInvalid(false);
-                } else {
-                    setPasswordConfirmInvalid(true);
-                }
-            } else {
-                // the format check failed
-                setPassword(event.target.value);
-                setPasswordInvalid(true);
-            }
-        } else if(event.target.name === "passwordConfirm") {
-            
-            if(event.target.value === password){
-                // Format check passed
-                setPasswordConfirm(event.target.value);
+    const onFirstNameChange = (event) => {
+        if(RegexService.validateInput(event.target.value, event.target.name)){
+            // Format check passed
+            setFirstName(RegexService.formatInput(event.target.value, event.target.name));
+            setFirstNameInvalid(false);
+        } else {
+            // the format check failed
+            setFirstName(RegexService.formatInput(event.target.value, event.target.name));
+            firstName !== '' ? setFirstNameInvalid(true) : setFirstNameInvalid(false); 
+        }
+
+    }
+
+    const onLastNameChange = (event) => {
+        if(RegexService.validateInput(event.target.value, event.target.name)){
+            // Format check passed
+            setLastName(RegexService.formatInput(event.target.value, event.target.name));
+            setLastNameInvalid(false);
+        } else {
+            // the format check failed
+            setLastName(RegexService.formatInput(event.target.value, event.target.name));
+            lastName !== '' ? setLastNameInvalid(true) : setLastNameInvalid(false)
+        }
+
+    }
+
+    const onPhoneChange = (event) => {
+        if(RegexService.validateInput(event.target.value, event.target.name)){
+            // Format check passed
+            setPhone(RegexService.formatInput(event.target.value, event.target.name));
+            setPhoneInvalid(false);
+        } else {
+            // the format check failed
+            setPhone(RegexService.formatInput(event.target.value, event.target.name));
+            phone !== '' ? setPhoneInvalid(true) : setPhoneInvalid(false);
+        }
+    }
+
+    const onEmailChange = (event) => {
+        if(RegexService.validateInput(event.target.value, event.target.name)){
+            // Format check passed
+            setEmail(RegexService.formatInput(event.target.value, event.target.name));
+            setEmailInvalid(false);
+        } else {
+            // the format check failed
+            setEmail(RegexService.formatInput(event.target.value, event.target.name));
+            email !== '' ? setEmailInvalid(true) : setEmailInvalid(false);
+        }
+    }
+
+    const onPasswordChange = (event) => {
+        if(RegexService.validateInput(event.target.value, event.target.name)){
+            // Format check passed
+            setPassword(event.target.value);
+            setPasswordInvalid(false);
+            if(event.target.value === passwordConfirm) {
                 setPasswordConfirmInvalid(false);
             } else {
-                // the format check failed
-                setPasswordConfirm(event.target.value);
                 setPasswordConfirmInvalid(true);
             }
-        } 
-        
+        } else {
+            // the format check failed
+            setPassword(event.target.value);
+            setPasswordInvalid(true);
+        }
+    }
+
+    const onPasswordConfirmChange = (event) => {
+        if(event.target.value === password){
+            // Format check passed
+            setPasswordConfirm(event.target.value);
+            setPasswordConfirmInvalid(false);
+        } else {
+            // the format check failed
+            setPasswordConfirm(event.target.value);
+            setPasswordConfirmInvalid(true);
+        }
     }
 
     const register = () => {
@@ -100,7 +108,7 @@ const SignupForm = (props) => {
                 if(!firstNameInvalid && !lastNameInvalid && !phoneInvalid && !emailInvalid && !passwordInvalid) {
                    props.registerUser(firstName, lastName, phone, email, password).then((res) => {
                        props.addSuccess("Registration was successsful!");
-                   }).catch((error) => {props.addError("Something went wrong with account creation.")})
+                   }).catch((error) => {props.addError("Credentials provided are assigned to existing account.")})
                 } else {props.addWarning('Input errors listed below each input feild must be resolved.')}
             } else {props.addWarning('No input fields can be left blank.')}
         } else {
@@ -108,84 +116,84 @@ const SignupForm = (props) => {
         setPasswordConfirmInvalid(true);
         props.addWarning('Password and Confirm Password must be filled out correctly.');
         }
-    };
+    }
 
     return (
-        <div className="SignupForm container m-t-2">
+        <div className="SignupForm container__row m-t-2 m-h-1">
             {/* TITLE */}
-            <div className="container__row">
-                <p className="container__col-12 title">ACCOUNT CREATION</p>
+            <div className="container__row justify-center">
+                <p className="Subtitle-primary">Account Creation</p>
             </div>
             {/* FIRST NAME INPUT */}
-            <div className="container__row-center m-t-1"> 
+            <div className="container__col-12 m-t-1"> 
                 <FormInput
                     styling={'input'}
                     hide={false}
                     inputInvalid={firstNameInvalid}
                     inputId={'firstName'}
                     name={'firstName'}
-                    value={RegexService.formatInput(firstName, 'firstName')}
+                    value={firstName}
                     type={'text'}
                     placeholder={'First Name'}
                     required={true}
-                    handleClick={onInputChange}
+                    handleClick={onFirstNameChange}
                     label={'First Name'}
                     validationMessage={'Firstname must have no spaces.'}
                 />
             </div>
             {/* LAST NAME INPUT */}
-            <div className="container__row">
+            <div className="container__col-12">
                 <FormInput
                     styling={'input'}
                     hide={false}
                     inputInvalid={lastNameInvalid}
                     inputId={'lastName'}
                     name={'lastName'}
-                    value={RegexService.formatInput(lastName, 'lastName')}
+                    value={lastName}
                     type={'text'}
                     placeholder={'Last Name'}
                     required={true}
-                    handleClick={onInputChange}
+                    handleClick={onLastNameChange}
                     label={'Last Name'}
                     validationMessage={'Last name must have no spaces.'}
                 />
             </div>
             {/* PHONE INPUT */}
-            <div className="container__row">
+            <div className="container__col-12">
                 <FormInput
                     styling={'input'}
                     hide={false}
                     inputInvalid={phoneInvalid}
                     inputId={'phone'}
-                    name={'phone'}
-                    value={RegexService.formatInput(phone, 'phone')}
-                    type={'tel'}
+                    name='phone'
+                    value={phone}
+                    type='tel'
                     placeholder={'Phone Number'}
                     required={true}
-                    handleClick={onInputChange}
+                    handleClick={onPhoneChange}
                     label={'Phone Number'}
                     validationMessage={'Phone number should only be 10 digits long.'}
                 />
             </div>
             {/* EMAIL INPUT */}
-            <div className="container__row">
+            <div className="container__col-12">
                 <FormInput
                     styling={'input'}
                     hide={false}
                     inputInvalid={emailInvalid}
                     inputId={'email'}
                     name={'email'}
-                    value={RegexService.formatInput(email, 'email')}
+                    value={email}
                     type={'email'}
                     placeholder={'Email Address'}
                     required={true}
-                    handleClick={onInputChange}
+                    handleClick={onEmailChange}
                     label={'Email Address'}
                     validationMessage={'Email incorrect, please revise.'}
                 />
             </div>
             {/* PASSWORD INPUT */}
-            <div className="container__row">
+            <div className="container__col-12">
                 <FormInput
                     styling={'input'}
                     hide={false}
@@ -196,13 +204,13 @@ const SignupForm = (props) => {
                     type={'password'}
                     placeholder={'Password'}
                     required={true}
-                    handleClick={onInputChange}
+                    handleClick={onPasswordChange}
                     label={'Password'}
                     validationMessage={'Password must contain the following:(1) lowercase letter, (1) uppercase letter, (1) number, and (9+) characters in length.'}
                 />
             </div>
             {/* CONFIRM PASSWORD INPUT */}
-            <div className="container__row">
+            <div className="container__col-12">
                 <FormInput
                     styling={'input'}
                     hide={false}
@@ -213,14 +221,14 @@ const SignupForm = (props) => {
                     type={'password'}
                     placeholder={'Confirm Password'}
                     required={true}
-                    handleClick={onInputChange}
+                    handleClick={onPasswordConfirmChange}
                     label={'Confirm Password'}
                     validationMessage={'Password and Confirm Password must match.'}
                 />
             </div>
             {/* REGISTER BUTTON */}
             <div className="container__row m-v-1">
-                <div className="container__col-12 link">
+                <div className="container__col-12">
                     <FormButton 
                         name="register" 
                         goalMet={props.isAuthenticated}
@@ -248,7 +256,7 @@ const SignupForm = (props) => {
 
 const mapStateToProps = (state) => ({
     isLoading: state.auth.isLoading,
-    isAuthenticated: state.auth.isAuthenticated
+    isLoggedIn: state.auth.isLoggedIn
   });
 
 export default connect(mapStateToProps, {registerUser, addWarning, addSuccess, addError})(SignupForm);
