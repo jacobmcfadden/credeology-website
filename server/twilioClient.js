@@ -2,7 +2,6 @@ const config = require('./config/config');
 
 module.exports.sendSms = async function(to, message) {
   const client = require('twilio')(config.accountSid, config.authToken);
-  // console.log(client.api.messages.create())
   return client.api.messages
     .create({
       body: message,

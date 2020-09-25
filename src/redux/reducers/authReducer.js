@@ -18,10 +18,10 @@ export function registerUser(firstName, lastName, phone, email, password) {
     }
 }
 
-export function loginUser(contact, password){
+export function loginUser(contact, password, code){
     return {
         type: LOGIN_USER.type,
-        payload: AxiosService.loginUser(contact, password)
+        payload: AxiosService.loginUser(contact, password, code)
     }
 }
 
@@ -39,17 +39,17 @@ export function getUser(){
     }
 }
 
-export function recoverAccount(email) {
+export function recoverAccount(contact, firstContactCode, secondContactCode) {
     return {
         type: RECOVER_ACCOUNT,
-        payload: AxiosService.recoverAccount(email)
+        payload: AxiosService.recoverAccount(contact, firstContactCode, secondContactCode)
     }
 }
 
-export function resetPassword(password, email) {
+export function resetPassword(password, contact) {
     return {
         type: RESET_PASSWORD,
-        payload: AxiosService.resetPassword(password, email)
+        payload: AxiosService.resetPassword(password, contact)
     }
 }
 
@@ -74,10 +74,10 @@ export function verifyEmail(userInput, contact){
     }
 }
 
-export function verifyPhone(userInput){
+export function verifyPhone(userInput, contact){
     return {
         type: VERIFY_PHONE,
-        payload: AxiosService.verifyPhone(userInput)
+        payload: AxiosService.verifyPhone(userInput, contact)
     }
 }
 
@@ -100,25 +100,18 @@ export function updateTwoFactorAuth(twoFactorAuth){
     }
 }
 
-export function twoFactorAuthentication(userInput){
-    return {
-        type: TWO_FACTOR_AUTHENTICATION,
-        payload: AxiosService.twoFactorAuthentication(userInput)
-    }
-}
-
 export default function(state = initialState, action){
     switch(action.type){
         case GET_USER.type + "_PENDING":
             return {...state, isLoading: true};
         case GET_USER.type + "_FULFILLED":
-            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isAuthenticated: action.payload.data.isAuthenticated, isLoggedIn: true};
+            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isAuthenticated: action.payload.data.isAuthenticated, isTwoFactorAuth: action.payload.data.isTwoFactorAuth};
         case GET_USER.type + "_REJECTED":
             return {...state, isLoading: false};
         case LOGIN_USER.type + '_PENDING':
             return {...state, isLoading: true};
         case LOGIN_USER.type + '_FULFILLED':
-            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isAuthenticated: action.payload.data.isAuthenticated, isLoggedIn: true};
+            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isAuthenticated: action.payload.data.isAuthenticated, isTwoFactorAuth: action.payload.data.isTwoFactorAuth};
         case LOGIN_USER.type + '_REJECTED':
             return {...state, isLoading: false};
         case LOGOUT_USER + '_PENDING':
@@ -130,19 +123,19 @@ export default function(state = initialState, action){
         case REGISTER_USER + '_PENDING':
             return {...state, isLoading: true};
         case REGISTER_USER + '_FULFILLED':
-            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isAuthenticated: action.payload.data.isAuthenticated, isLoggedIn: true};
+            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isAuthenticated: action.payload.data.isAuthenticated, isTwoFactorAuth: action.payload.data.isTwoFactorAuth};
         case REGISTER_USER + '_REJECTED':
             return {...state, isLoading: false};
         case RECOVER_ACCOUNT + '_PENDING':
             return {...state, isLoading: true};
         case RECOVER_ACCOUNT + '_FULFILLED':
-            return {...state, isLoading: false, user: {email: action.payload.data}};
+            return {...state, isLoading: false};
         case RECOVER_ACCOUNT + '_REJECTED':
             return {...state, isLoading: false};
         case RESET_PASSWORD + '_PENDING':
             return {...state, isLoading: true};
         case RESET_PASSWORD + '_FULFILLED':
-            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isTwoFactorAuth: action.payload.data.twoFactorAuth, isLoggedIn: true};
+            return {...state, isLoading: false, user: action.payload.data, isPhoneVerified: action.payload.data.isPhoneVerified, isEmailVerified: action.payload.data.isEmailVerified, isAuthenticated: action.payload.data.isAuthenticated, isTwoFactorAuth: action.payload.data.isTwoFactorAuth};
         case RESET_PASSWORD + '_REJECTED':
             return {...state, isLoading: false};
         case UPDATE_TWO_FACTOR_AUTH + '_PENDING':
@@ -179,12 +172,6 @@ export default function(state = initialState, action){
             return {...state, isPhoneVerifySkip: true};
         case SET_IS_AUTHENTICATED:
             return {...state, isAuthenticated: true};
-        case TWO_FACTOR_AUTHENTICATION + '_PENDING':
-            return {...state, isLoading: true};
-        case TWO_FACTOR_AUTHENTICATION + '_FULFILLED':
-            return {...state, isLoading: false, isAuthenticated: true, isEmailVerified: action.payload.data.isEmailVerified, isPhoneVerified: action.payload.data.isPhoneVerified, isTwoFactorAuth: action.paylaod.data.twoFactorAuth};
-        case TWO_FACTOR_AUTHENTICATION + '_REJECTED':
-            return {...state, isLoading: false};
             default:
             return state;
     }

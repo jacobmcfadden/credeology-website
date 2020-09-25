@@ -12,6 +12,7 @@ const SixDigitButton = (props) => {
     const [fourth, setFourth] = useState('');
     const [fifth, setFifth] = useState('');
     const [sixth, setSixth] = useState('');
+    const [readyToSendCode, setReadyToSendCode] = useState(false);
 
     const input1 = useRef(null);
     const input2 = useRef(null);
@@ -36,14 +37,25 @@ const SixDigitButton = (props) => {
           input6.current.focus()
         } else if(first && second && third && fourth && fifth && sixth) {
           setCode(`${first}${second}${third}${fourth}${fifth}${sixth}`)
-          handleCode(code)
+          setReadyToSendCode(true)
         }      
       } else {
       }
-    });
+    }, [show, first, second, third, fourth, fifth, sixth, setCode]);
 
+    useEffect(() => {
+      if(readyToSendCode === true)
+        handleCode(null, code);
+        setReadyToSendCode(false)
+        setFirst('')
+        setSecond('')
+        setThird('')
+        setFourth('')
+        setFifth('')
+        setSixth('')
+    }, [readyToSendCode, code, handleCode])
   return (
-    <div className={`SixDigitButton m-v-1 ${show && !goalMet ? "" : "hidden"}`}>
+    <div className={`SixDigitButton m-v-1 ${show && !goalMet ? "" : "hidden-trans"}`}>
         <div className="mm-number">
 			<div className="mm-number-container">
 				<div className="mm-number-input">

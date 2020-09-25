@@ -5,7 +5,6 @@ import AuthRoute from './AuthRoute';
 // Components
 import Website from './components/website/Website';
 import Auth from './components/auth/Auth';
-import TwoFactorAuth from './components/auth/TwoFactorAuth';
 import Verify from './components/verify/Verify';
 import AppProtected from './components/app/AppProtected';
 
@@ -14,7 +13,6 @@ export default (
         <Route exact path="/" component={Website}/>
         <AuthRoute exact path="/verify" component={Verify}/>
 		<AuthRoute path="/auth" component={Auth}/>  
-        <AuthRoute path="/tfa" component={TwoFactorAuth}/>       
         <AuthRoute path="/app" component={AppProtected}/>
     </Switch>
 );

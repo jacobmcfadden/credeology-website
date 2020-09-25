@@ -53,6 +53,5 @@ app.post('/verify/phone', auth.sendPhoneCode);
 app.put('/verify/phone', auth.verifyPhone);
 app.put('/verify/email', auth.verifyEmail);
 app.put('/auth/tfa', auth.updateTwoFactorAuth);
-app.post('/verify/tfa', auth.twoFactorAuthentication)
 
 app.listen(SERVER_PORT, () => console.log(`Connected to port ${SERVER_PORT}`));

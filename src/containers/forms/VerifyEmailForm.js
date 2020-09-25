@@ -9,7 +9,7 @@ const VerifyEmailForm = (props) => {
     const [emailCodeSent, setEmailCodeSent] = useState(false); 
   
     const sendEmailCode = (event) => {
-        props.sendEmailCode().then((res) => {
+        props.sendEmailCode(props.email).then((res) => {
             setEmailCodeSent(true);
             props.addSuccess('Email verification code has been sent!')
         }).catch ((err) => {
@@ -17,8 +17,8 @@ const VerifyEmailForm = (props) => {
         })
     }
 
-    const verifyEmail = (code) => {
-        props.verifyEmail(code, props.email).then(() => {
+    const verifyEmail = (event, code) => {
+        props.verifyEmail(code, props.email).then((res) => {
             props.addSuccess('Email has been verified!')
         }).catch ((err) => {
             props.addError('Email code invalid, please try again.')
@@ -29,7 +29,7 @@ const VerifyEmailForm = (props) => {
     <div className="VerifyForm container__col-12 m-t-1">
         {/* EMAIL VERIFICATION SECTION */}
         <div className="container__row justify-center m-b-1">
-            <p className="Subtitle">Email Verification</p>
+            <p className="Subtitle">Verify Email</p>
             <p className="Phrase align-text m-t-1">Credeology will send a verification code to email address:</p>
             <p className="Phrase-primary container__row justify-center m-t-50 m-b-1">{props.email}</p>
             <span className="container__row justify-center">

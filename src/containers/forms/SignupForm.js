@@ -255,8 +255,7 @@ const SignupForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    isLoading: state.auth.isLoading,
-    isLoggedIn: state.auth.isLoggedIn
+    isLoading: state.auth.isLoading
   });
 
 export default connect(mapStateToProps, {registerUser, addWarning, addSuccess, addError})(SignupForm);

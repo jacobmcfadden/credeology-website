@@ -6,7 +6,8 @@ import SixDigitButton from '../../components/inputs/SixDigitInput';
 import FormButton from '../../components/buttons/FormButton';
 
 const TwoFactorForm = (props) => {
-    const [phoneCodeSent, setPhoneCodeSent] = useState(false)
+    const {code} = props;
+    const [phoneCodeSent, setPhoneCodeSent] = useState(false);
   
     const sendPhoneCode = (event) => {
         props.sendPhoneCode().then(() => {
@@ -32,12 +33,12 @@ const TwoFactorForm = (props) => {
 
         <div className="container__row m-t-1">
             <div className="container__col-12">
-                <p className={`Phrase align-text`}>Credeology will send a verification code to phone number:</p>
+                <p className={`Phrase align-text`}>Credeology will send a verification code to:</p>
             </div>
         </div>
         <div className="container__row">
             <div className="container__col-12">
-                <p className={`Phrase-primary align-text m-t-50 m-b-1`}>{props.phone}</p>
+                <p className={`Phrase-primary align-text m-t-50 m-b-1`}>{props.contact}</p>
             </div>
         </div>
                 <SixDigitButton 

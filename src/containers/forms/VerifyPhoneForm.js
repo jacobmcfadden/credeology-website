@@ -10,7 +10,7 @@ const VerifyPhoneForm = (props) => {
     const [phoneCodeSent, setPhoneCodeSent] = useState(false)
   
     const sendPhoneCode = (event) => {
-        props.sendPhoneCode().then(() => {
+        props.sendPhoneCode(props.phone).then((res) => {
             setPhoneCodeSent(true);
             props.addSuccess('Phone verification code has been sent!')
         }).catch ((err) => {
@@ -19,8 +19,8 @@ const VerifyPhoneForm = (props) => {
 
     };
 
-    const verifyPhone = (code) => {
-        props.verifyPhone(code).then(() => {
+    const verifyPhone = (event, code) => {
+        props.verifyPhone(code, props.phone).then((res) => {
             props.addSuccess('Phone has been verified!')
         }).catch ((err) => {
             props.addError('Phone code invalid, please try again.')
@@ -28,7 +28,6 @@ const VerifyPhoneForm = (props) => {
     }
 
     const setPhoneSkip = (event) => {
-        console.log(`Click Hit with ${event}`)
         return props.setPhoneSkip();
     };
     
@@ -37,7 +36,7 @@ const VerifyPhoneForm = (props) => {
         {/* PHONE VERIFICATION SECTION */}
         <div className="container__row justify-center m-b-1">
             
-            <p className="Subtitle">Phone Verification</p>
+            <p className="Subtitle">Verify Phone</p>
             <p className={`Phrase align-text m-t-1 ${props.isPhoneVerified ? 'hidden' : ''}`}>Credeology will send a verification code to phone number:</p>
             {props.phone ? <p className={`Phrase-primary container_row align-text m-t-50 m-b-1 ${props.isPhoneVerified ? 'hidden' : ''}`}>{RegexService.formatInput(props.phone, 'phone')}</p> : '' }
   

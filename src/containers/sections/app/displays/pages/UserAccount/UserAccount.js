@@ -5,6 +5,7 @@ import UserAccountSettings from './UserAccountSettings';
 import UserAccountActivity from './UserAccountActivity';
 import {connect} from 'react-redux';
 import {logoutUser} from '../../../../../../redux/reducers/authReducer';
+import {clearAll} from '../../../../../../redux/reducers/notificationReducer';
 import FormButton from '../../../../../../components/buttons/FormButton';
 import ImageIcon from '../../../../../../assets/icons/system/ImageIcon';
 import FormLink from '../../../../../../components/links/FormLink';
@@ -14,10 +15,10 @@ const UserAccount = (props) => {
   
   const setUserLoggedOut = async () => {
     props.logoutUser().then((res) => {
+      props.clearAll();
      return <Redirect push to={'/auth'} />;
-    });
+    }).catch(err => {});
   }
-console.log()
   return (
     <div className="UserAccount">
       <div className="container__row">
@@ -101,4 +102,4 @@ const mapStateToProps = (state) => ({
   result: state.auth.result
 });
 
-export default connect(mapStateToProps, {logoutUser})(UserAccount);
+export default connect(mapStateToProps, {logoutUser, clearAll})(UserAccount);

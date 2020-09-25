@@ -126,7 +126,7 @@
 // Displays
 .Display {
   width: 100%;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 100px);
   overflow: scroll;
   background-color: $background-color;
 }
@@ -559,8 +559,9 @@
   text-align: center;
   color: $light-shade;
   margin-bottom: .5rem;
-  font-weight: $font-light;
+  font-weight: $font-bold;
   font-size: 4rem;
+  font-family: $roboto;
 }
 
 .phrase {
@@ -573,6 +574,68 @@
 }
 
 // NOTIFICATION STYLING
+.ActionConsole {
+  @include transition(all 1s);
+  &-active{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .35);
+    pointer-events: none;
+    position: fixed;
+    @include transition(all 1s);
+  }
+}
+
+.ConsoleButton{
+  @extend .flex;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  @extend .justify-center;
+  @extend .align-center;
+  @extend .m-v-1;
+  @extend .radius-4;
+  background-color: rgba(0, 108, 240, 1);
+  pointer-events: all;
+  z-index: 2000;
+  @include transition(all 1s);
+  &-active {
+    @extend .ConsoleButton;
+    background-color: rgba(131, 15, 255, 0.9);
+    @include transition(all 1s);
+  }
+  .SettingIcon {
+    @extend .m-a-50;
+    color: rgba(255, 255, 255, 0.85);
+    pointer-events: all;
+  }
+}
+
+.ConsoleNotification {
+  background-color: transparent;
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  bottom: 2.1rem;
+  right: 4.37rem;
+  width: 270px;
+  height: 56px;
+  pointer-events: none;
+  animation: 4s fadeOut;
+  visibility: visible;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  99% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+
 .NotifyBanner {
   background-color: transparent;
   position: fixed;
@@ -584,6 +647,7 @@
   width: 16%;
   min-width: 250px;
   height: 100%;
+  pointer-events: none;
 }
 
 .EventMessage, .SuccessMessage, .ErrorMessage, .SystemMessage, .WarningMessage  {
@@ -596,6 +660,7 @@
   animation: w48to100 ease-out 1s;
   width: 100%;
   margin-bottom: 1rem;
+  pointer-events: all;
 }
 
 .SuccessMessage{
@@ -622,6 +687,7 @@ background-color: rgba(131, 15, 255, 0.9);
   display: flex;
   flex-direction: row;
   width: 100%;
+  max-height: 52px;
 }
 
 .noti-icon {
@@ -1394,6 +1460,9 @@ background-color: rgba(131, 15, 255, 0.9);
   margin-left: .25rem;
   }
   &-a {
+    &-50 {
+      margin: .5rem;
+    }
     &-1 {
       margin: 1rem;
     }

@@ -6,19 +6,27 @@ import * as RegexService from '../../services/RegexService';
 import FormButton from '../../components/buttons/FormButton';
 import FormInput from '../../components/inputs/FormInput';
 import FormLink from '../../components/links/FormLink';
-import VerifyEmailForm from '../forms/VerifyEmailForm';
-import { addWarning, addSuccess, addError } from '../../redux/reducers/notificationReducer';
+import SixDigitButton from '../../components/inputs/SixDigitInput';
+import { addWarning, addSuccess, addError, addSystem } from '../../redux/reducers/notificationReducer';
 
 const RecoveryForm = (props) => {
-    const [email, setEmail] = useState('');
-    const [emailInvalid, setEmailInvalid] = useState(false);
+    const [contact, setContact] = useState('');
+    const [contactInvalid, setContactInvalid] = useState(false);
+    const [isEmail, setIsEmail] = useState(false);
+    const [isPhone, setIsPhone] = useState(false);
+    const [firstContactFound, setFirstContactFound] = useState(false);
+    let [firstContactCode, setFirstContactCode] = useState('')
+    const [twoFactorRequired, setTwoFactorRequired] = useState(false);
+    const [secondContact, setSecondContact] = useState('')
+    let [secondContactCode, setSecondContactCode] = useState('');
+   
+    const [userPassed, setUserPassed] = useState(false);
+    
     const [password, setPassword] = useState('');
     const [passwordInvalid, setPasswordInvalid] = useState(false);
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [passwordConfirmInvalid, setPasswordConfirmInvalid] = useState(false);
 
-    const [recoverInitiated, setRecoverInitiated] = useState(false);
-    
     const onPasswordChange = (event) => {
         if(RegexService.validateInput(event.target.value, event.target.name)){
             // Format check passed
@@ -48,30 +56,69 @@ const RecoveryForm = (props) => {
         }
     }
 
-    const onEmailChange = (event) => {
-        if(RegexService.validateInput(event.target.value, event.target.name)){
-            // Format check passed
-            setEmail(RegexService.formatInput(event.target.value, event.target.name));
-            setEmailInvalid(false);
+    const onContactChange = (event) => {
+        if(event.target.name === "contact") {
+            if(RegexService.validateInput(event.target.value, 'phone')){
+                // Format check passed
+                setContact(RegexService.formatInput(event.target.value, 'phone'));
+                setContactInvalid(false);
+                setIsPhone(true);
+                setIsEmail(false);
+            } else if(RegexService.validateInput(event.target.value, 'email')){
+                // Format check passed
+                setContact(RegexService.formatInput(event.target.value, 'email'));
+                setContactInvalid(false);
+                setIsPhone(false);
+                setIsEmail(true);
+            } else {
+                // the format check failed
+                setContact(event.target.value);
+                contact !== '' ? setContactInvalid(true) : setContactInvalid(false);
+                setIsPhone(false);
+                setIsEmail(false);
+            }
         } else {
-            // the format check failed
-            setEmail(RegexService.formatInput(event.target.value, event.target.name));
-            email !== '' ? setEmailInvalid(true) : setEmailInvalid(false);
+            // Do nothing
+        }
+    };
+
+    const onRecoverSubmit = (event, code) => {
+        if(firstContactFound === true && twoFactorRequired === false) {
+            setFirstContactCode(code);
+            onRecoverAccount(code, secondContactCode);
+        } else if (firstContactFound === true &&  twoFactorRequired === true) {
+            setSecondContactCode(code);
+            onRecoverAccount(firstContactCode, code);
+        } else {
+            onRecoverAccount();
         }
     }
 
-    const onRecoverSubmit = () => {
-       if(!email) {
-           props.addWarning('Your email address must be provided.');
+    const onRecoverAccount = (firstCode, secondCode) => {
+       if(!contact) {
+           props.addWarning('Your email or phone linked to the account must be provided.');
         } else {
-           if(emailInvalid) {
+           if(contactInvalid) {
                props.addWarning('Please fix the current warning at the email address input and resubmit.');
             } else {
-                props.recoverAccount(email).then(() => {
-                    setRecoverInitiated(true);
-                    props.addSuccess('Your email address has been located!')
-                }).catch(() => {
-                    props.addError('Your email address was not found in our system.')
+                props.recoverAccount(contact, firstCode, secondCode).then((res) => {
+                    // this should be 200 status if it isnt in catch with userPassed === true
+                    return setUserPassed(true);
+                }).catch((err) => {
+                    if (err.response.status === 500) {
+                        return props.addWarning('Returned a server 500 error')
+                    } else if(err.response.status === 404) {
+                        return props.addWarning('Your input did not match.')
+                    } else if(err.response.status === 401) {
+                        setFirstContactFound(true);
+                        return props.addSystem({message: "Account found code has been sent"})
+                    } else if(err.response.status === 403) {
+                        setTwoFactorRequired(true)
+                        setSecondContact(err.response.data)
+                        return props.addSystem({message: "Account requires Two Factor Authentication"})
+                    } else {
+                        return props.addSystem({message: "Return no exprected esponses."})
+                    }
                 })
             }
         }
@@ -79,8 +126,8 @@ const RecoveryForm = (props) => {
 
     const onResetSubmit = () => {
         if(password === passwordConfirm && (password !== '' || passwordConfirm !== '')) {
-            if(password && !passwordInvalid) {
-                   props.resetPassword(password, props.email).then((res) => {
+            if(password && !passwordInvalid && userPassed === true) {
+                   props.resetPassword(password, contact).then((res) => {
                        props.addSuccess("Password reset was successsful!");
                    }).catch((error) => {props.addError("Password failed, please try again.")})
             } else {
@@ -94,38 +141,70 @@ const RecoveryForm = (props) => {
     }
 
     const recoverAccountElements = () => {
-        if(recoverInitiated) {
+        if(firstContactFound === true && twoFactorRequired === true && userPassed === false) {
             return (
-                <div className="container__row justify-center">
-                    <VerifyEmailForm/>
+                <div className="RecoverAccount container__row">
+                {/* INSTRUCTIONAL P TAG */}
+                <div className="container__row m-t-1">
+                    <div className="container__col-12">
+                        <p className="Phrase align-text">A code has been sent to {secondContact}</p>
+                    </div>
                 </div>
+                <div className="container__row justify-center">
+                        <SixDigitButton 
+                            show={twoFactorRequired}
+                            goalMet={userPassed}
+                            handleCode={onRecoverSubmit}
+                        />
+                </div>
+            </div>    
+
             );
-        } else {
+        } else if (firstContactFound === true && twoFactorRequired === false && userPassed === false) {
+            return (
+                <div className="RecoverAccount container__row">
+                {/* INSTRUCTIONAL P TAG */}
+                <div className="container__row m-t-1">
+                    <div className="container__col-12">
+                        <p className="Phrase align-text">A code has been sent to {contact}</p>
+                    </div>
+                </div>
+                <div className="container__row justify-center">
+                        <SixDigitButton 
+                            show={firstContactFound}
+                            goalMet={userPassed}
+                            handleCode={onRecoverSubmit}
+                        />
+                </div>
+            </div>    
+
+            );
+        }else if(firstContactFound === false && twoFactorRequired === false && userPassed === false){
             return (
                 <div className="RecoverAccount container__row">
                     {/* INSTRUCTIONAL P TAG */}
                     <div className="container__row m-t-1">
                         <div className="container__col-12">
-                            <p className="Phrase align-text">Please enter your email address linked to your account.</p>
+                            <p className="Phrase align-text">Please enter your email or phone linked to your account.</p>
                         </div>
                     </div>
                     {/* EMAIL INPUT */}
                     <div className="container__row justify-center m-t-1">
                         <div className="container__col-12">
-                            <FormInput
-                                styling={'input'}
-                                hide={false}
-                                inputInvalid={emailInvalid}
-                                inputId={'email'}
-                                name={'email'}
-                                value={RegexService.formatInput(email, 'email')}
-                                type={'email'}
-                                placeholder={'Email Address'}
-                                required={true}
-                                handleClick={onEmailChange}
-                                label={'Email Address'}
-                                validationMessage={'Email incorrect, please revise.'}
-                            />
+                        <FormInput
+                            styling={'input'}
+                            hide={false}
+                            inputInvalid={contactInvalid}
+                            inputId={'contact'}
+                            name={'contact'}
+                            value={contact}
+                            type={'contact'}
+                            placeholder={'Email or Phone'}
+                            required={true}
+                            handleClick={onContactChange}
+                            label={inputLabelResult()}
+                            validationMessage={"Input must be a valid email address or 10 digit phone number."}
+                        />
                         </div> 
                     </div>
                     {/* SEND CODE BUTTON */}
@@ -133,8 +212,8 @@ const RecoveryForm = (props) => {
                         <div className="container__col-12 link">
                             <FormButton 
                                 name="recoverAccount" 
-                                disable={false}
-                                goalMet={false}
+                                disable={firstContactFound}
+                                goalMet={firstContactFound}
                                 displayText={'Recover Account'}
                                 styling={'btn-std-lg-orange'}
                                 handleClick={onRecoverSubmit}
@@ -147,7 +226,7 @@ const RecoveryForm = (props) => {
     }
    
     const resetPasswordElements = () => {
-        if(recoverInitiated && props.email && props.isEmailVerified) {
+        if(userPassed === true && firstContactFound === true) {
             return( 
             <div className="container__row">
                 <div className="container__col-12">
@@ -186,7 +265,7 @@ const RecoveryForm = (props) => {
                     <div className="container__col-12">
                         <FormButton 
                             name="reset" 
-                            goalMet={props.isLoggedIn}
+                            goalMet={props.isAuthenticated}
                             isLoading={props.isLoading}
                             displayText={'Reset Password'}
                             styling={'btn-std-lg-orange'}
@@ -202,7 +281,7 @@ const RecoveryForm = (props) => {
     }
 
     const pageLinks = () => {
-        if(!recoverInitiated) {
+        if(!firstContactFound) {
             return ( 
                 <div className="RecoverRouteLinks container__row">
                     <div className="container__row">
@@ -230,6 +309,16 @@ const RecoveryForm = (props) => {
         }
 
     }
+    
+    const inputLabelResult = () => {
+        if(isEmail && !isPhone) {
+            return 'Email Address';
+        } else if(!isEmail && isPhone) {
+            return 'Phone Address';
+        } else {
+            return 'Email/Phone';
+        }
+    }
 
   return (
     <div className="RecoveryForm container__row m-t-2 m-h-1">
@@ -245,10 +334,8 @@ const RecoveryForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    isLoggedIn: state.auth.isLoggedIn,
-    isEmailVerified: state.auth.isEmailVerified,
-    email: state.auth.user.email,
+    isAuthenticated: state.auth.isAuthenticated,
     isLoading: state.auth.isLoading
   });
 
-export default connect(mapStateToProps, {recoverAccount, resetPassword, addError, addSuccess, addWarning})(RecoveryForm);
+export default connect(mapStateToProps, {recoverAccount, resetPassword, addError, addSuccess, addWarning, addSystem})(RecoveryForm);

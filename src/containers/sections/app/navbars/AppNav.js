@@ -6,7 +6,7 @@ import NavList from '../../../lists/horizontal/NavList';
 import HomeIcon from '../../../../assets/icons/system/HomeIcon';
 
 const items = [
-  { name : "portal", where : "/app", display: "PORTAL", styling: "NavLinx-lg-light"},
+  // { name : "portal", where : "/app", display: "PORTAL", styling: "NavLinx-lg-light"},
   { name : "account", where : "/app/account", display: "ACCOUNT", styling: "NavLinx-lg-light"},
 ]
 
@@ -17,12 +17,12 @@ const AppNav = (props) => {
   const {firstName, lastName} = props;
   return (
     <div className="AppNav">
-      <div className="container__col-4">
+      <div className="container__col-6">
         <div className="LocationPanel">  
-          <div className="AppMenuToggle">
+          {/* <div className="AppMenuToggle">
               <MenuIcon height='1.5rem' width='1.5rem' className={`fill-light ${navExpanded ? 'hidden' : ''}`} onClick={e => setNavExpanded(true)}/>
-          </div>
-          <div className="container__col-5">
+          </div> */}
+          <div className="container__col-12">
             <div className="Breadcrumb">
               <HomeIcon height='1rem' width='1rem' className={`fill-light`} />
               <p className="NavLink-lg-light m-v-auto">{location.pathname}</p>
@@ -30,7 +30,7 @@ const AppNav = (props) => {
           </div>
         </div>
       </div>
-      <div className="container__col-8">
+      <div className="container__col-6">
         <div className="NavigationPanel">
           
           <nav className="SubAppPages">

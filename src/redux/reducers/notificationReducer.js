@@ -81,7 +81,7 @@ export default function(state = initialState, action){
         case REMOVE_NOTIFICATION:
             return {...state, items: state.items.filter(item => item.id !== payload)}
         case CLEAR_ALL:
-            return {...state, items: []};
+            return initialState;
         case TOGGLE_BANNER:
             return {...state, isOpen: !state.isOpen};
         default:
