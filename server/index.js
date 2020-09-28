@@ -3,6 +3,7 @@ const express = require('express');
 const massive = require('massive');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const path = require('path') // Usually moved to the start of file
 // const MessagingResponse = require('twilio').twiml.MessagingResponse;
 // const twilio = require('twilio');
 // const config = require('./config/config');
@@ -17,6 +18,7 @@ const awsCtrl = require('./controllers/awsController');
 const auth = require('./controllers/authController');
 
 app.use(express.json());
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -53,5 +55,8 @@ app.post('/verify/phone', auth.sendPhoneCode);
 app.put('/verify/phone', auth.verifyPhone);
 app.put('/verify/email', auth.verifyEmail);
 app.put('/auth/tfa', auth.updateTwoFactorAuth);
-
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'))
+  });
+  
 app.listen(SERVER_PORT, () => console.log(`Connected to port ${SERVER_PORT}`));
