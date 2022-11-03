@@ -219,7 +219,7 @@ const LoginForm = (props) => {
                             name="phone"
                             disable={contactCodeSent}
                             goalMet={props.isAuthenticated}
-                            displayText={'AUTHENTICATE'}
+                            displayText={'SEND CODE'}
                             styling={'btn-std-lg-orange'}
                             handleClick={sendCode}
                         />

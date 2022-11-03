@@ -1,35 +1,18 @@
 import React from 'react';
-
+import Credeology from '../../../../assets/logo/Credeology';
+import TechnologiesUsed from '../../../lists/cards/TechnologiesUsed';
+import CredeologyLogo from '../../../../assets/logo/CredeologyLogo';
 const Footer = (props) => {
     return (
-        <div className="Footer">
-          <footer className="container"> 
-            <div className="container__row">
-              <div className="container__col-4">
-                <h4 className="title m-r-auto">Navigation</h4>
-                <nav className="list">
-                    <li className="">products</li>
-                    <li className="">features</li>
-                    <li className="">solutions</li>
-                    <li className="">pricing</li>
-                    <li className="">Contact us</li>
-                </nav>
-              </div>
-              <div className="container__col-4">
-                <p className="">© 2020 Credeology All Rights Reserved.</p>
-              </div>
-              <div className="container__col-4">
-                  <p className="title">Follow Us</p>
-                  <ul className="container__row">
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Youtube</li>
-                    <li>LinkedIn</li>
-                  </ul>
-              </div>
-            </div>
-          </footer>
-        </div>
+        <footer className="Footer">
+          <TechnologiesUsed/>
+          <div className="m-t-3">
+          <CredeologyLogo/> 
+          </div>
+          <div>
+          <p className="caption-white flex justify-center m-t-2">Copyright © 2020 Credeology. All rights reserved.</p>
+          </div>
+        </footer>
     );
 }
 

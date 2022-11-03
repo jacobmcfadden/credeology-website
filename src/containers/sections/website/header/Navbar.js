@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import CredeologyLogo from '../../../../assets/logo/CredeologyLogo';
 import FormButton from '../../../../components/buttons/FormButton';
@@ -9,17 +9,16 @@ import MenuIcon from '../../../../assets/icons/system/MenuIcon';
 const Navbar = (props) => {
 
 const items = [
-  { name : "products", where : "/#products", display: "PRODUCTS", styling: "NavLinx-lg-light"},
-  { name : "features", where : "/#features", display: "features", styling: "NavLinx-lg-light"},
-  { name : "solutions", where : "/#solutions", display: "solutions", styling: "NavLinx-lg-light"},
-  { name : "pricing", where : "/#pricing", display: "pricing", styling: "NavLinx-lg-light"},
-  { name : "contactUs", where : "/#contactus", display: "contact us", styling: "NavLinx-lg-light"}
+  // { name : "products", where : "/#products", display: "PRODUCTS", styling: "NavLinx-lg-light"},
+  // { name : "features", where : "/#features", display: "features", styling: "NavLinx-lg-light"},
+  // { name : "solutions", where : "/#solutions", display: "solutions", styling: "NavLinx-lg-light"},
+  // { name : "pricing", where : "/#pricing", display: "pricing", styling: "NavLinx-lg-light"},
+  // { name : "contactUs", where : "/#contactus", display: "contact us", styling: "NavLinx-lg-light"}
 ]
-
-const [navExpanded, setNavExpanded] = useState(false);
-
+  const [navExpanded, setNavExpanded] = useState(false);
+    
   return (
-    <div className="Navbar">
+    <div className={`Navbar ${props.backgroundColor}`}>
       <div className="container__row">
         <div className={`${navExpanded ? 'container__col-12' : 'container__col-12 container__col-sm-5 container__col-md-4 container__col-lg-3'} container__col-xl-2`}>
           <CredeologyLogo/> 
